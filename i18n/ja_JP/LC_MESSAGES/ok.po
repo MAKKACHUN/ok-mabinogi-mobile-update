@@ -1,0 +1,565 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: you@example.com\n"
+"Last-Translator: you@example.com\n"
+"Language-Team: English\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "100%"
+msgstr ""
+
+msgid "200%"
+msgstr ""
+
+msgid "2000%"
+msgstr ""
+
+msgid "800%"
+msgstr ""
+
+msgid "Auto Pick"
+msgstr ""
+
+msgid "Auto Pick in Game World"
+msgstr ""
+
+msgid "Check Monthly Card"
+msgstr ""
+
+msgid "Check for monthly card to avoid interruption of tasks"
+msgstr ""
+
+msgid "Combat Key"
+msgstr ""
+
+msgid "Dodge Key"
+msgstr ""
+
+msgid "END_WAIT_SPACE"
+msgstr ""
+
+msgid "F10"
+msgstr ""
+
+msgid "F11"
+msgstr ""
+
+msgid "F12"
+msgstr ""
+
+msgid "F9"
+msgstr ""
+
+msgid "Game Hotkey Config"
+msgstr ""
+
+msgid "Game Sensitivity Config"
+msgstr ""
+
+msgid "Game Sensitivity Description"
+msgstr ""
+
+msgid "Game Sensitivity Switch"
+msgstr ""
+
+msgid "Geniemon Key"
+msgstr ""
+
+msgid "HelixLeap Key"
+msgstr ""
+
+msgid "In Game Hotkey for Skills"
+msgstr ""
+
+msgid "Interact Key"
+msgstr ""
+
+msgid "MAX_END_SEC"
+msgstr ""
+
+msgid "MAX_FIGHT_SEC"
+msgstr ""
+
+msgid "MAX_ROUNDS"
+msgstr ""
+
+msgid "MAX_START_SEC"
+msgstr ""
+
+msgid "Monthly Card Config"
+msgstr ""
+
+msgid "Monthly Card Time"
+msgstr ""
+
+msgid "Turn on to avoid interruption by monthly card when executing tasks"
+msgstr ""
+
+msgid "Ultimate Key"
+msgstr ""
+
+msgid "X-axis sensitivity"
+msgstr ""
+
+msgid "Y-axis sensitivity"
+msgstr ""
+
+msgid "Your computer's local time when the monthly card will popup, hour in (1-24)"
+msgstr ""
+
+msgid "e"
+msgstr ""
+
+msgid "f"
+msgstr ""
+
+msgid "right"
+msgstr ""
+
+msgid "x1"
+msgstr ""
+
+msgid "x2"
+msgstr ""
+
+msgid "不使用"
+msgstr "使用しない"
+
+msgid "不重开时会发出声音提示"
+msgstr "タスクが再起動しない場合に音声アラートが再生されます"
+
+msgid "不需要按开始"
+msgstr "開始を押す必要はありません"
+
+msgid "主画面侦测"
+msgstr "メイン画面検出"
+
+msgid "使用外部移动逻辑自动打本"
+msgstr "外部移動ロジックを使用してダンジョンを自動周回"
+
+msgid "使用键盘"
+msgstr "キーボードを使用"
+
+msgid "全局任务设定"
+msgstr "グローバルタスク設定"
+
+msgid "全局技能设定"
+msgstr "グローバルスキル設定"
+
+msgid "全自动"
+msgstr "全自動"
+
+msgid ""
+"全自动80护送 (源自emt)，欢迎作者署名。\n"
+"装备：水母 + 0精春玦戟。设置：水平灵敏度和垂直灵敏度1.0，镜头距离1.3，帧率120。\n"
+"魔之楔：金色迅捷+5 / 紫色穿引共鸣 / 紫色迅捷蓄势+5 / 紫色迅捷坠击+5（面板攻速1.67）。"
+msgstr ""
+"全自動80護衛（emtより）、作者名の記載を歓迎します。\n"
+"装備：クラゲ + 0精錬春玦戟。設定：水平感度と垂直感度1.0、カメラ距離1.3、フレームレート120。\n"
+"魔の楔：金色迅速+5 / 紫色穿引共鳴 / 紫色迅速蓄勢+5 / 紫色迅速墜撃+5（パネル攻撃速度1.67）。"
+
+msgid "副本类型"
+msgstr "ダンジョンタイプ"
+
+msgid "半自动"
+msgstr "半自動"
+
+msgid "半自动 (只有基础操作)"
+msgstr "半自動（基本操作のみ）"
+
+msgid "单次提示响几次"
+msgstr "1回のプロンプトで何回ビープ音を鳴らすか"
+
+msgid "右键按住多久(秒)"
+msgstr "右マウスボタンを押し続ける時間（秒）"
+
+msgid "右键释放后等待多久(秒)"
+msgstr "右マウスボタンを離した後の待機時間（秒）"
+
+msgid "启动任务时和特定场景下会将鼠标移动到安全位置"
+msgstr "タスク開始時や特定のシナリオでマウスを安全な位置に移動します"
+
+msgid "启动机关解锁"
+msgstr "ギミックを起動してロック解除"
+
+msgid "启用"
+msgstr "有効"
+
+msgid "在需要时发出声音提醒"
+msgstr "必要な時に音声で通知"
+
+msgid "在需要时启用触发任务的自动穿引共鸣"
+msgstr "必要な時にタスクをトリガーするための自動穿引共鳴を有効にする"
+
+msgid "在需要时启用触发任务的自动花弓"
+msgstr "必要な時にタスクをトリガーするための自動花弓を有効にする"
+
+msgid "地图选择"
+msgstr "マップ選択"
+
+msgid "外部文件夹"
+msgstr "外部フォルダ"
+
+msgid "如果不在可操控角色的画面则结束任务"
+msgstr "操作可能なキャラクター画面でない場合はタスクを終了"
+
+msgid "如果是无尽关卡，选择打几个轮次"
+msgstr "エンドレスステージの場合、何ウェーブ戦うか選択"
+
+msgid "委托手册"
+msgstr "依頼マニュアル"
+
+msgid "委托手册指定轮次"
+msgstr "依頼マニュアル指定ウェーブ"
+
+msgid "密函处理方式：自动选择第一个密函 / 直接开始 / 等待用户选择"
+msgstr "密函の処理方式：最初を自動選択 / 直接開始 / ユーザー操作待ち"
+
+msgid "自动选择第一个密函"
+msgstr "最初の密函を自動選択"
+
+msgid "直接开始"
+msgstr "直接開始"
+
+msgid "等待用户选择"
+msgstr "ユーザーの選択を待つ"
+
+msgid "默认选择"
+msgstr "デフォルト選択"
+
+msgid "密函奖励选择策略：默认选择 / 持有数为0 / 持有数最少 / 持有数最多 / 等待用户选择"
+msgstr "密函報酬の選択方針：デフォルト / 所持数0 / 最少 / 最多 / ユーザー操作待ち"
+
+msgid "密函奖励偏好"
+msgstr "密函の報酬設定"
+
+msgid "左键按住多久"
+msgstr "左マウスボタンを押し続ける時間"
+
+msgid "左键释放后等待多久"
+msgstr "左マウスボタンを離した後の待機時間"
+
+msgid "建议启用"
+msgstr "有効推奨"
+
+msgid "建议启用, 鼠标抖动时如果不在窗口范围则设置到窗口范围内"
+msgstr "有効推奨。マウスジッター中にマウスがウィンドウ範囲外にある場合、ウィンドウ内に移動させます"
+
+msgid "开始阶段超时(秒)"
+msgstr "開始フェーズのタイムアウト（秒）"
+
+msgid "开局向前走"
+msgstr "開始時に前進"
+
+msgid "开局向前走几秒"
+msgstr "開始時に何秒前進するか"
+
+msgid "开局重置角色位置"
+msgstr "開始時にキャラクターの位置をリセット"
+
+msgid "弹出通知"
+msgstr "ポップアップ通知"
+
+msgid "必须勾选才能执行任务！"
+msgstr "タスクを実行するにはチェックを入れる必要があります！"
+
+msgid "我已阅读注意事项并确认配置"
+msgstr "注意事項を読み、設定を確認しました"
+
+msgid "战技"
+msgstr "戦闘スキル"
+
+msgid "打几个轮次"
+msgstr "何ウェーブ戦うか"
+
+msgid "扼守无尽"
+msgstr "エンドレス防衛"
+
+msgid "技能"
+msgstr "スキル"
+
+msgid "技能1"
+msgstr "スキル1"
+
+msgid "技能1_释放后等待"
+msgstr "スキル1_使用後の待機"
+
+msgid "技能1_释放频率"
+msgstr "スキル1_使用頻度"
+
+msgid "技能2"
+msgstr "スキル2"
+
+msgid "技能2_释放后等待"
+msgstr "スキル2_使用後の待機"
+
+msgid "技能2_释放频率"
+msgstr "スキル2_使用頻度"
+
+msgid "技能3"
+msgstr "スキル3"
+
+msgid "技能3_释放后等待"
+msgstr "スキル3_使用後の待機"
+
+msgid "技能3_释放频率"
+msgstr "スキル3_使用頻度"
+
+msgid "技能4"
+msgstr "スキル4"
+
+msgid "技能4_释放后等待"
+msgstr "スキル4_使用後の待機"
+
+msgid "技能4_释放频率"
+msgstr "スキル4_使用頻度"
+
+msgid "持有数为0"
+msgstr "所持数0"
+
+msgid "持有数最多"
+msgstr "所持数最多"
+
+msgid "持有数最少"
+msgstr "所持数最少"
+
+msgid "挂机模式"
+msgstr "放置モード"
+
+msgid "挂机相关设置"
+msgstr "放置関連設定"
+
+msgid "挂机设置"
+msgstr "放置設定"
+
+msgid "指定优先选择的奖励类型，需开启「自动处理密函」"
+msgstr "優先する報酬タイプを指定します。「密函の自動処理」を有効にする必要があります"
+
+msgid "按下时间"
+msgstr "押下時間"
+
+msgid "按住普攻"
+msgstr "通常攻撃を長押し"
+
+msgid "探险平地"
+msgstr "探索 平地"
+
+msgid "探险无尽"
+msgstr "探索 エンドレス"
+
+msgid "探险电梯"
+msgstr "探索 エレベーター"
+
+msgid "探险高台"
+msgstr "探索 高台"
+
+msgid "提示音"
+msgstr "通知音"
+
+msgid "提示音次数"
+msgstr "通知音の回数"
+
+msgid "无悠闲全自动钓鱼 (原作者: B站无敌大蜜瓜)"
+msgstr "のんびりしない全自動釣り（原作者：Bilibiliの無敵大蜜瓜）"
+
+msgid "是否在任务中随机移动"
+msgstr "タスク中にランダムに移動するか"
+
+msgid "是否弹出windows通知"
+msgstr "Windows通知を表示するか"
+
+msgid "普攻"
+msgstr "通常攻撃"
+
+msgid "最大轮数，鱼塘每天上限为100次"
+msgstr "最大ウェーブ数、釣り場の1日の上限は100回です"
+
+msgid "每几秒释放一次技能"
+msgstr "数秒ごとにスキルを使用"
+
+msgid "每轮结束等待时间(秒)"
+msgstr "各ウェーブ終了後の待機時間（秒）"
+
+msgid "波次超时后将发出提示"
+msgstr "ウェーブがタイムアウトするとアラートが発行されます"
+
+msgid "溜鱼阶段超时(秒)"
+msgstr "魚との格闘フェーズのタイムアウト（秒）"
+
+msgid "激活键"
+msgstr "アクティベーションキー"
+
+msgid "示例-无巧手30火突破素材(1080p) by望目"
+msgstr "例 - スキルなし30火突破素材（1080p）by 望目"
+
+msgid "移动延迟（秒）"
+msgstr "移動遅延（秒）"
+
+msgid "终结技"
+msgstr "アルティメット"
+
+msgid "结束阶段超时(秒)"
+msgstr "終了フェーズのタイムアウト（秒）"
+
+msgid "自动30/65级魔之楔本"
+msgstr "自動Lv.30/65魔の楔"
+
+msgid "自动70级皎皎币本"
+msgstr "自動Lv.70皎皎コインダンジョン"
+
+msgid "自动勘察"
+msgstr "自動調査"
+
+msgid "自动处理密函"
+msgstr "密函の自動処理"
+
+msgid "自动完成密函的对话交互与默认奖励领取"
+msgstr "密函の会話インタラクションを自動的に完了し、デフォルトの報酬を受け取る"
+
+msgid "自动战斗"
+msgstr "自動戦闘"
+
+msgid "自动扼守"
+msgstr "自動防衛"
+
+msgid "自动探险"
+msgstr "自動探索"
+
+msgid "自动探险/无尽"
+msgstr "自動探索/エンドレス"
+
+msgid "自动穿引共鸣"
+msgstr "自動穿引共鳴"
+
+msgid "自动肉鸽对话"
+msgstr "ローグライク会話の自動化"
+
+msgid "自动花序弓蓄力瞄准"
+msgstr "花弓のチャージ照準を自動化"
+
+msgid "自动花弓"
+msgstr "自動花弓"
+
+msgid "自动解锁轮盘"
+msgstr "ルーレットの自動ロック解除"
+
+msgid "自动解锁迷宫"
+msgstr "迷路の自動ロック解除"
+
+msgid "自动识别并进行迷宫解锁"
+msgstr "迷路を自動的に認識してロック解除"
+
+msgid "自动跳过肉鸽对话"
+msgstr "ローグライク会話の自動スキップ"
+
+msgid "自动避险"
+msgstr "危険の自動回避"
+
+msgid "自动释放技能"
+msgstr "スキルの自動使用"
+
+msgid "自动钓鱼"
+msgstr "自動釣り"
+
+msgid "自动飞枪80护送（无需巧手）【需要游戏处于前台】"
+msgstr "自動フライングスピア80護衛（スキル不要）【ゲームをフォアグラウンドにする必要があります】"
+
+msgid "自动驱离"
+msgstr "自動撃退"
+
+msgid "范例: 3,5,8"
+msgstr "例：3,5,8"
+
+msgid "解密失败自动重开"
+msgstr "解読失敗時に自動再起動"
+
+msgid "超时后将发出提示"
+msgstr "タイムアウト後にアラートが発行されます"
+
+msgid "超时后将重启任务"
+msgstr "タイムアウト後にタスクが再起動します"
+
+msgid "超时时间"
+msgstr "タイムアウト"
+
+msgid "轮次"
+msgstr "ウェーブ"
+
+msgid "选择mod目录下的外部逻辑"
+msgstr "modディレクトリから外部ロジックを選択"
+
+msgid "选择要自动执行的地图类型"
+msgstr "自動実行するマップタイプを選択"
+
+msgid "通用型半自动"
+msgstr "汎用半自動"
+
+msgid "释放后等待几秒"
+msgstr "使用後数秒待機"
+
+msgid "释放间隔"
+msgstr "使用間隔"
+
+msgid "键盘"
+msgstr "キーボード"
+
+msgid "间隔时间"
+msgstr "間隔時間"
+
+msgid "防止鼠标干扰"
+msgstr "マウス干渉の防止"
+
+msgid "随便搞的，基于2k写的其他分辨率要是有问题就不管了，有bug也不用反馈因为拿到巧手后就不维护了(狗头)"
+msgstr "適当に作ったもので、2kをベースにしているので他の解像度で問題があっても対応しません。スキルを手に入れたらメンテナンスしなくなるので、バグ報告も不要です（笑）"
+
+msgid "随机游走"
+msgstr "ランダムウォーク"
+
+msgid "需主动激活"
+msgstr "手動での有効化が必要"
+
+msgid "需主动激活，运行中也可使用左键打断"
+msgstr "手動での有効化が必要、実行中に左マウスボタンで中断可能"
+
+msgid "需主动激活，运行中可使用右键或左键打断"
+msgstr "手動での有効化が必要、実行中に右または左マウスボタンで中断可能"
+
+msgid "魔灵支援"
+msgstr "ジェニエモンサポート"
+
+msgid "默认"
+msgstr "デフォルト"
+
+msgid "鼠标抖动"
+msgstr "マウスジッター"
+
+msgid "鼠标抖动锁定在窗口范围"
+msgstr "マウスジッターをウィンドウ内にロック"
+
+msgid "鼠标键或键盘按键"
+msgstr "マウスボタンまたはキーボードキー"
+
+msgid "使用飞枪等存在视角移动的外部逻辑时可以启用"
+msgstr "フライングガンなど、視点移動を伴う外部ロジックを使用する際に有効化してください。"
+
+msgid "关闭抖动"
+msgstr "揺れを無効化"
+
+msgid "Ctrl+战技（赛琪专属）"
+msgstr "Ctrl+戦技（プシュケ専用）"
+
+msgid "任务设定"
+msgstr "任務設定"
+
+msgid "Aim X-axis sensitivity"
+msgstr ""
+
+msgid "Aim Y-axis sensitivity"
+msgstr ""
+
+msgid "自动苏乙终结技"
+msgstr "自動スイアルティメット"

@@ -1,0 +1,562 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: you@example.com\n"
+"Last-Translator: you@example.com\n"
+"Language-Team: English\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "100%"
+msgstr ""
+
+msgid "200%"
+msgstr ""
+
+msgid "2000%"
+msgstr ""
+
+msgid "800%"
+msgstr ""
+
+msgid "Auto Pick"
+msgstr "自动拾取"
+
+msgid "Auto Pick in Game World"
+msgstr "大世界自动拾取"
+
+msgid "Check Monthly Card"
+msgstr "是否检查月卡"
+
+msgid "Check for monthly card to avoid interruption of tasks"
+msgstr "设置避免小月卡弹窗打断任务"
+
+msgid "Combat Key"
+msgstr "战技"
+
+msgid "Dodge Key"
+msgstr "闪避按键"
+
+msgid "END_WAIT_SPACE"
+msgstr ""
+
+msgid "F10"
+msgstr ""
+
+msgid "F11"
+msgstr ""
+
+msgid "F12"
+msgstr ""
+
+msgid "F9"
+msgstr ""
+
+msgid "Game Hotkey Config"
+msgstr "游戏快捷键设置"
+
+msgid "Game Sensitivity Config"
+msgstr "游戏灵敏度设置"
+
+msgid "Game Sensitivity Description"
+msgstr "使用转动视角类型脚本时不再需要修改游戏内灵敏度"
+
+msgid "Game Sensitivity Switch"
+msgstr "开关"
+
+msgid "Geniemon Key"
+msgstr "魔灵支援"
+
+msgid "HelixLeap Key"
+msgstr "螺旋飞跃按键"
+
+msgid "In Game Hotkey for Skills"
+msgstr "游戏内技能快捷键"
+
+msgid "Interact Key"
+msgstr "交互按键"
+
+msgid "MAX_END_SEC"
+msgstr ""
+
+msgid "MAX_FIGHT_SEC"
+msgstr ""
+
+msgid "MAX_ROUNDS"
+msgstr ""
+
+msgid "MAX_START_SEC"
+msgstr ""
+
+msgid "Monthly Card Config"
+msgstr "小月卡设置"
+
+msgid "Monthly Card Time"
+msgstr "月卡时间"
+
+msgid "Turn on to avoid interruption by monthly card when executing tasks"
+msgstr "开启避免挂任务的时候被月卡中断"
+
+msgid "Ultimate Key"
+msgstr "终结技"
+
+msgid "X-axis sensitivity"
+msgstr "游戏内水平灵敏度"
+
+msgid "Y-axis sensitivity"
+msgstr "游戏内垂直灵敏度"
+
+msgid "Your computer's local time when the monthly card will popup, hour in (1-24)"
+msgstr "几点会弹出月卡提示, 本地计算机时间(1-24)"
+
+msgid "e"
+msgstr ""
+
+msgid "f"
+msgstr ""
+
+msgid "right"
+msgstr ""
+
+msgid "x1"
+msgstr ""
+
+msgid "x2"
+msgstr ""
+
+msgid "不使用"
+msgstr ""
+
+msgid "不重开时会发出声音提示"
+msgstr ""
+
+msgid "不需要按开始"
+msgstr ""
+
+msgid "主画面侦测"
+msgstr ""
+
+msgid "使用外部移动逻辑自动打本"
+msgstr ""
+
+msgid "使用键盘"
+msgstr ""
+
+msgid "全局任务设定"
+msgstr ""
+
+msgid "全局技能设定"
+msgstr ""
+
+msgid "全自动"
+msgstr ""
+
+msgid ""
+"全自动80护送 (源自emt)，欢迎作者署名。\n"
+"装备：水母 + 0精春玦戟。设置：水平灵敏度和垂直灵敏度1.0，镜头距离1.3，帧率120。\n"
+"魔之楔：金色迅捷+5 / 紫色穿引共鸣 / 紫色迅捷蓄势+5 / 紫色迅捷坠击+5（面板攻速1.67）。"
+msgstr ""
+
+msgid "副本类型"
+msgstr ""
+
+msgid "半自动"
+msgstr ""
+
+msgid "半自动 (只有基础操作)"
+msgstr ""
+
+msgid "单次提示响几次"
+msgstr ""
+
+msgid "右键按住多久(秒)"
+msgstr ""
+
+msgid "右键释放后等待多久(秒)"
+msgstr ""
+
+msgid "启动任务时和特定场景下会将鼠标移动到安全位置"
+msgstr ""
+
+msgid "启动机关解锁"
+msgstr ""
+
+msgid "启用"
+msgstr ""
+
+msgid "在需要时发出声音提醒"
+msgstr ""
+
+msgid "在需要时启用触发任务的自动穿引共鸣"
+msgstr ""
+
+msgid "在需要时启用触发任务的自动花弓"
+msgstr ""
+
+msgid "地图选择"
+msgstr ""
+
+msgid "外部文件夹"
+msgstr ""
+
+msgid "如果不在可操控角色的画面则结束任务"
+msgstr ""
+
+msgid "如果是无尽关卡，选择打几个轮次"
+msgstr ""
+
+msgid "委托手册"
+msgstr ""
+
+msgid "委托手册指定轮次"
+msgstr ""
+
+msgid "密函处理方式：自动选择第一个密函 / 直接开始 / 等待用户选择"
+msgstr ""
+
+msgid "自动选择第一个密函"
+msgstr ""
+
+msgid "直接开始"
+msgstr ""
+
+msgid "等待用户选择"
+msgstr ""
+
+msgid "默认选择"
+msgstr ""
+
+msgid "密函奖励偏好"
+msgstr ""
+
+msgid "密函奖励选择策略：默认选择 / 持有数为0 / 持有数最少 / 持有数最多 / 等待用户选择"
+msgstr ""
+
+msgid "左键按住多久"
+msgstr ""
+
+msgid "左键释放后等待多久"
+msgstr ""
+
+msgid "建议启用"
+msgstr ""
+
+msgid "建议启用, 鼠标抖动时如果不在窗口范围则设置到窗口范围内"
+msgstr ""
+
+msgid "开始阶段超时(秒)"
+msgstr ""
+
+msgid "开局向前走"
+msgstr ""
+
+msgid "开局向前走几秒"
+msgstr ""
+
+msgid "开局重置角色位置"
+msgstr ""
+
+msgid "弹出通知"
+msgstr ""
+
+msgid "必须勾选才能执行任务！"
+msgstr ""
+
+msgid "我已阅读注意事项并确认配置"
+msgstr ""
+
+msgid "战技"
+msgstr ""
+
+msgid "打几个轮次"
+msgstr ""
+
+msgid "扼守无尽"
+msgstr ""
+
+msgid "技能"
+msgstr ""
+
+msgid "技能1"
+msgstr ""
+
+msgid "技能1_释放后等待"
+msgstr ""
+
+msgid "技能1_释放频率"
+msgstr ""
+
+msgid "技能2"
+msgstr ""
+
+msgid "技能2_释放后等待"
+msgstr ""
+
+msgid "技能2_释放频率"
+msgstr ""
+
+msgid "技能3"
+msgstr ""
+
+msgid "技能3_释放后等待"
+msgstr ""
+
+msgid "技能3_释放频率"
+msgstr ""
+
+msgid "技能4"
+msgstr ""
+
+msgid "技能4_释放后等待"
+msgstr ""
+
+msgid "技能4_释放频率"
+msgstr ""
+
+msgid "持有数为0"
+msgstr ""
+
+msgid "持有数最多"
+msgstr ""
+
+msgid "持有数最少"
+msgstr ""
+
+msgid "挂机模式"
+msgstr ""
+
+msgid "挂机相关设置"
+msgstr ""
+
+msgid "挂机设置"
+msgstr ""
+
+msgid "指定优先选择的奖励类型，需开启「自动处理密函」"
+msgstr ""
+
+msgid "按下时间"
+msgstr ""
+
+msgid "按住普攻"
+msgstr ""
+
+msgid "探险平地"
+msgstr ""
+
+msgid "探险无尽"
+msgstr ""
+
+msgid "探险电梯"
+msgstr ""
+
+msgid "探险高台"
+msgstr ""
+
+msgid "提示音"
+msgstr ""
+
+msgid "提示音次数"
+msgstr ""
+
+msgid "无悠闲全自动钓鱼 (原作者: B站无敌大蜜瓜)"
+msgstr ""
+
+msgid "是否在任务中随机移动"
+msgstr ""
+
+msgid "是否弹出windows通知"
+msgstr ""
+
+msgid "普攻"
+msgstr ""
+
+msgid "最大轮数，鱼塘每天上限为100次"
+msgstr ""
+
+msgid "每几秒释放一次技能"
+msgstr ""
+
+msgid "每轮结束等待时间(秒)"
+msgstr ""
+
+msgid "波次超时后将发出提示"
+msgstr ""
+
+msgid "溜鱼阶段超时(秒)"
+msgstr ""
+
+msgid "激活键"
+msgstr ""
+
+msgid "示例-无巧手30火突破素材(1080p) by望目"
+msgstr ""
+
+msgid "移动延迟（秒）"
+msgstr ""
+
+msgid "终结技"
+msgstr ""
+
+msgid "结束阶段超时(秒)"
+msgstr ""
+
+msgid "自动30/65级魔之楔本"
+msgstr ""
+
+msgid "自动70级皎皎币本"
+msgstr ""
+
+msgid "自动勘察"
+msgstr ""
+
+msgid "自动处理密函"
+msgstr ""
+
+msgid "自动完成密函的对话交互与默认奖励领取"
+msgstr ""
+
+msgid "自动战斗"
+msgstr ""
+
+msgid "自动扼守"
+msgstr ""
+
+msgid "自动探险"
+msgstr ""
+
+msgid "自动探险/无尽"
+msgstr ""
+
+msgid "自动穿引共鸣"
+msgstr ""
+
+msgid "自动肉鸽对话"
+msgstr ""
+
+msgid "自动花序弓蓄力瞄准"
+msgstr ""
+
+msgid "自动花弓"
+msgstr ""
+
+msgid "自动解锁轮盘"
+msgstr ""
+
+msgid "自动解锁迷宫"
+msgstr ""
+
+msgid "自动识别并进行迷宫解锁"
+msgstr ""
+
+msgid "自动跳过肉鸽对话"
+msgstr ""
+
+msgid "自动避险"
+msgstr ""
+
+msgid "自动释放技能"
+msgstr ""
+
+msgid "自动钓鱼"
+msgstr ""
+
+msgid "自动飞枪80护送（无需巧手）【需要游戏处于前台】"
+msgstr ""
+
+msgid "自动驱离"
+msgstr ""
+
+msgid "范例: 3,5,8"
+msgstr ""
+
+msgid "解密失败自动重开"
+msgstr ""
+
+msgid "超时后将发出提示"
+msgstr ""
+
+msgid "超时后将重启任务"
+msgstr ""
+
+msgid "超时时间"
+msgstr ""
+
+msgid "轮次"
+msgstr ""
+
+msgid "选择mod目录下的外部逻辑"
+msgstr ""
+
+msgid "选择要自动执行的地图类型"
+msgstr ""
+
+msgid "通用型半自动"
+msgstr ""
+
+msgid "释放后等待几秒"
+msgstr ""
+
+msgid "释放间隔"
+msgstr ""
+
+msgid "键盘"
+msgstr ""
+
+msgid "间隔时间"
+msgstr ""
+
+msgid "防止鼠标干扰"
+msgstr ""
+
+msgid "随便搞的，基于2k写的其他分辨率要是有问题就不管了，有bug也不用反馈因为拿到巧手后就不维护了(狗头)"
+msgstr ""
+
+msgid "随机游走"
+msgstr ""
+
+msgid "需主动激活"
+msgstr ""
+
+msgid "需主动激活，运行中也可使用左键打断"
+msgstr ""
+
+msgid "需主动激活，运行中可使用右键或左键打断"
+msgstr ""
+
+msgid "魔灵支援"
+msgstr ""
+
+msgid "默认"
+msgstr ""
+
+msgid "鼠标抖动"
+msgstr ""
+
+msgid "鼠标抖动锁定在窗口范围"
+msgstr ""
+
+msgid "鼠标键或键盘按键"
+msgstr ""
+
+msgid "使用飞枪等存在视角移动的外部逻辑时可以启用"
+msgstr ""
+
+msgid "关闭抖动"
+msgstr ""
+
+msgid "Ctrl+战技（赛琪专属）"
+msgstr ""
+
+msgid "任务设定"
+msgstr ""
+
+msgid "Aim X-axis sensitivity"
+msgstr "游戏内射击时水平灵敏度"
+
+msgid "Aim Y-axis sensitivity"
+msgstr "游戏内射击时垂直灵敏度"
+
+msgid "自动苏乙终结技"
+msgstr ""

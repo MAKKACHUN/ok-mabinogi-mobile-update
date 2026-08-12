@@ -1,0 +1,565 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: you@example.com\n"
+"Last-Translator: you@example.com\n"
+"Language-Team: English\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "100%"
+msgstr ""
+
+msgid "200%"
+msgstr ""
+
+msgid "2000%"
+msgstr ""
+
+msgid "800%"
+msgstr ""
+
+msgid "Auto Pick"
+msgstr ""
+
+msgid "Auto Pick in Game World"
+msgstr ""
+
+msgid "Check Monthly Card"
+msgstr ""
+
+msgid "Check for monthly card to avoid interruption of tasks"
+msgstr ""
+
+msgid "Combat Key"
+msgstr ""
+
+msgid "Dodge Key"
+msgstr ""
+
+msgid "END_WAIT_SPACE"
+msgstr ""
+
+msgid "F10"
+msgstr ""
+
+msgid "F11"
+msgstr ""
+
+msgid "F12"
+msgstr ""
+
+msgid "F9"
+msgstr ""
+
+msgid "Game Hotkey Config"
+msgstr ""
+
+msgid "Game Sensitivity Config"
+msgstr ""
+
+msgid "Game Sensitivity Description"
+msgstr ""
+
+msgid "Game Sensitivity Switch"
+msgstr ""
+
+msgid "Geniemon Key"
+msgstr ""
+
+msgid "HelixLeap Key"
+msgstr ""
+
+msgid "In Game Hotkey for Skills"
+msgstr ""
+
+msgid "Interact Key"
+msgstr ""
+
+msgid "MAX_END_SEC"
+msgstr ""
+
+msgid "MAX_FIGHT_SEC"
+msgstr ""
+
+msgid "MAX_ROUNDS"
+msgstr ""
+
+msgid "MAX_START_SEC"
+msgstr ""
+
+msgid "Monthly Card Config"
+msgstr ""
+
+msgid "Monthly Card Time"
+msgstr ""
+
+msgid "Turn on to avoid interruption by monthly card when executing tasks"
+msgstr ""
+
+msgid "Ultimate Key"
+msgstr ""
+
+msgid "X-axis sensitivity"
+msgstr ""
+
+msgid "Y-axis sensitivity"
+msgstr ""
+
+msgid "Your computer's local time when the monthly card will popup, hour in (1-24)"
+msgstr ""
+
+msgid "e"
+msgstr ""
+
+msgid "f"
+msgstr ""
+
+msgid "right"
+msgstr ""
+
+msgid "x1"
+msgstr ""
+
+msgid "x2"
+msgstr ""
+
+msgid "不使用"
+msgstr "Not in use"
+
+msgid "不重开时会发出声音提示"
+msgstr "A sound alert will play if the task does not restart"
+
+msgid "不需要按开始"
+msgstr "No need to press Start"
+
+msgid "主画面侦测"
+msgstr "Main Screen Detection"
+
+msgid "使用外部移动逻辑自动打本"
+msgstr "Use external movement logic for automated dungeon runs"
+
+msgid "使用键盘"
+msgstr "Use Keyboard"
+
+msgid "全局任务设定"
+msgstr "Global Task Settings"
+
+msgid "全局技能设定"
+msgstr "Global Skill Settings"
+
+msgid "全自动"
+msgstr "Full-Auto"
+
+msgid ""
+"全自动80护送 (源自emt)，欢迎作者署名。\n"
+"装备：水母 + 0精春玦戟。设置：水平灵敏度和垂直灵敏度1.0，镜头距离1.3，帧率120。\n"
+"魔之楔：金色迅捷+5 / 紫色穿引共鸣 / 紫色迅捷蓄势+5 / 紫色迅捷坠击+5（面板攻速1.67）。"
+msgstr ""
+"Fully automatic 80 escort (from emt), author attribution welcome.\n"
+"Equipment: Jellyfish + 0 refined Spring Jade Halberd. Settings: Horizontal and vertical sensitivity 1.0, camera distance 1.3, frame rate 120.\n"
+"Demon's Wedge: Gold Swiftness+5 / Purple Resonance Pull / Purple Swiftness Charge+5 / Purple Swiftness Plunge+5 (panel attack speed 1.67)."
+
+msgid "副本类型"
+msgstr "Dungeon Type"
+
+msgid "半自动"
+msgstr "Semi-Auto"
+
+msgid "半自动 (只有基础操作)"
+msgstr "Semi-automatic (basic operations only)"
+
+msgid "单次提示响几次"
+msgstr "How many times to beep for a single prompt"
+
+msgid "右键按住多久(秒)"
+msgstr "How long to hold the right mouse button (seconds)"
+
+msgid "右键释放后等待多久(秒)"
+msgstr "How long to wait after releasing the right mouse button (seconds)"
+
+msgid "启动任务时和特定场景下会将鼠标移动到安全位置"
+msgstr "Moves the mouse to a safe position when starting a task and in specific scenarios"
+
+msgid "启动机关解锁"
+msgstr "Activate mechanism to unlock"
+
+msgid "启用"
+msgstr "Enable"
+
+msgid "在需要时发出声音提醒"
+msgstr "Play a sound reminder when needed"
+
+msgid "在需要时启用触发任务的自动穿引共鸣"
+msgstr "Enable automatic Resonance Pull to trigger tasks when needed"
+
+msgid "在需要时启用触发任务的自动花弓"
+msgstr "Enable automatic Floral Bow to trigger tasks when needed"
+
+msgid "地图选择"
+msgstr "Map Selection"
+
+msgid "外部文件夹"
+msgstr "External Folder"
+
+msgid "如果不在可操控角色的画面则结束任务"
+msgstr "End the task if not on the controllable character screen"
+
+msgid "如果是无尽关卡，选择打几个轮次"
+msgstr "If it's an endless level, choose how many waves to fight"
+
+msgid "委托手册"
+msgstr "Commission Manual"
+
+msgid "委托手册指定轮次"
+msgstr "Commission Manual specified waves"
+
+msgid "密函处理方式：自动选择第一个密函 / 直接开始 / 等待用户选择"
+msgstr "Secret Letter handling mode: auto-select first / start directly / wait for user"
+
+msgid "自动选择第一个密函"
+msgstr "Auto-select the first Secret Letter"
+
+msgid "直接开始"
+msgstr "Start directly"
+
+msgid "等待用户选择"
+msgstr "Wait for user selection"
+
+msgid "默认选择"
+msgstr "Default selection"
+
+msgid "密函奖励选择策略：默认选择 / 持有数为0 / 持有数最少 / 持有数最多 / 等待用户选择"
+msgstr "Secret Letter reward strategy: default / quantity=0 / lowest / highest / wait for user"
+
+msgid "密函奖励偏好"
+msgstr "Secret Letter Reward Preference"
+
+msgid "左键按住多久"
+msgstr "How long to hold the left mouse button"
+
+msgid "左键释放后等待多久"
+msgstr "How long to wait after releasing the left mouse button"
+
+msgid "建议启用"
+msgstr "Recommended to enable"
+
+msgid "建议启用, 鼠标抖动时如果不在窗口范围则设置到窗口范围内"
+msgstr "Recommended to enable. If the mouse is outside the window during mouse shake, it will be moved within the window"
+
+msgid "开始阶段超时(秒)"
+msgstr "Start phase timeout (seconds)"
+
+msgid "开局向前走"
+msgstr "Move forward at the start"
+
+msgid "开局向前走几秒"
+msgstr "How many seconds to move forward at the start"
+
+msgid "开局重置角色位置"
+msgstr "Reset character position at the start"
+
+msgid "弹出通知"
+msgstr "Pop-up Notification"
+
+msgid "必须勾选才能执行任务！"
+msgstr "Must be checked to execute the task!"
+
+msgid "我已阅读注意事项并确认配置"
+msgstr "I have read the notes and confirmed the configuration"
+
+msgid "战技"
+msgstr "Combat Skill"
+
+msgid "打几个轮次"
+msgstr "How many waves to fight"
+
+msgid "扼守无尽"
+msgstr "Endless Defense"
+
+msgid "技能"
+msgstr "Skill"
+
+msgid "技能1"
+msgstr "Skill 1"
+
+msgid "技能1_释放后等待"
+msgstr "Skill 1_Wait after cast"
+
+msgid "技能1_释放频率"
+msgstr "Skill 1_Cast frequency"
+
+msgid "技能2"
+msgstr "Skill 2"
+
+msgid "技能2_释放后等待"
+msgstr "Skill 2_Wait after cast"
+
+msgid "技能2_释放频率"
+msgstr "Skill 2_Cast frequency"
+
+msgid "技能3"
+msgstr "Skill 3"
+
+msgid "技能3_释放后等待"
+msgstr "Skill 3_Wait after cast"
+
+msgid "技能3_释放频率"
+msgstr "Skill 3_Cast frequency"
+
+msgid "技能4"
+msgstr "Skill 4"
+
+msgid "技能4_释放后等待"
+msgstr "Skill 4_Wait after cast"
+
+msgid "技能4_释放频率"
+msgstr "Skill 4_Cast frequency"
+
+msgid "持有数为0"
+msgstr "Quantity is 0"
+
+msgid "持有数最多"
+msgstr "Highest Quantity"
+
+msgid "持有数最少"
+msgstr "Lowest Quantity"
+
+msgid "挂机模式"
+msgstr "AFK Mode"
+
+msgid "挂机相关设置"
+msgstr "AFK Related Settings"
+
+msgid "挂机设置"
+msgstr "AFK Settings"
+
+msgid "指定优先选择的奖励类型，需开启「自动处理密函」"
+msgstr "Specify the preferred reward type, requires 'Auto-process Secret Letters' to be enabled"
+
+msgid "按下时间"
+msgstr "Press duration"
+
+msgid "按住普攻"
+msgstr "Hold Normal Attack"
+
+msgid "探险平地"
+msgstr "Exploration Plain"
+
+msgid "探险无尽"
+msgstr "Exploration Endless"
+
+msgid "探险电梯"
+msgstr "Exploration Elevator"
+
+msgid "探险高台"
+msgstr "Exploration High Platform"
+
+msgid "提示音"
+msgstr "Alert Sound"
+
+msgid "提示音次数"
+msgstr "Number of Alerts"
+
+msgid "无悠闲全自动钓鱼 (原作者: B站无敌大蜜瓜)"
+msgstr "No-leisure fully automatic fishing (Original author: Bilibili's InvincibleBigMelon)"
+
+msgid "是否在任务中随机移动"
+msgstr "Randomly move during the task"
+
+msgid "是否弹出windows通知"
+msgstr "Show Windows notifications"
+
+msgid "普攻"
+msgstr "Normal Attack"
+
+msgid "最大轮数，鱼塘每天上限为100次"
+msgstr "Maximum waves, the daily limit for the fishing spot is 100 times"
+
+msgid "每几秒释放一次技能"
+msgstr "Cast skill every few seconds"
+
+msgid "每轮结束等待时间(秒)"
+msgstr "Waiting time at the end of each wave (seconds)"
+
+msgid "波次超时后将发出提示"
+msgstr "An alert will be issued after the wave times out"
+
+msgid "溜鱼阶段超时(秒)"
+msgstr "Fish fighting phase timeout (seconds)"
+
+msgid "激活键"
+msgstr "Activation Key"
+
+msgid "示例-无巧手30火突破素材(1080p) by望目"
+msgstr "Example - No-skill 30 fire breakthrough material (1080p) by 望目"
+
+msgid "移动延迟（秒）"
+msgstr "Movement Delay (seconds)"
+
+msgid "终结技"
+msgstr "Ultimate"
+
+msgid "结束阶段超时(秒)"
+msgstr "End phase timeout (seconds)"
+
+msgid "自动30/65级魔之楔本"
+msgstr "Auto-run Lv.30/65 Demon's Wedge"
+
+msgid "自动70级皎皎币本"
+msgstr "Auto-run Lv.70 Jiao Jiao Coin dungeon"
+
+msgid "自动勘察"
+msgstr "Auto Survey"
+
+msgid "自动处理密函"
+msgstr "Auto-process Secret Letters"
+
+msgid "自动完成密函的对话交互与默认奖励领取"
+msgstr "Automatically complete secret letter dialogue interactions and claim default rewards"
+
+msgid "自动战斗"
+msgstr "Auto Battle"
+
+msgid "自动扼守"
+msgstr "Auto Defend"
+
+msgid "自动探险"
+msgstr "Auto Explore"
+
+msgid "自动探险/无尽"
+msgstr "Auto Explore/Endless"
+
+msgid "自动穿引共鸣"
+msgstr "Auto Resonance Pull"
+
+msgid "自动肉鸽对话"
+msgstr "Auto roguelike dialogue"
+
+msgid "自动花序弓蓄力瞄准"
+msgstr "Auto-aim with charged Floral Bow"
+
+msgid "自动花弓"
+msgstr "Auto Floral Bow"
+
+msgid "自动解锁轮盘"
+msgstr "Auto-unlock wheel"
+
+msgid "自动解锁迷宫"
+msgstr "Auto-unlock maze"
+
+msgid "自动识别并进行迷宫解锁"
+msgstr "Automatically identify and unlock the maze"
+
+msgid "自动跳过肉鸽对话"
+msgstr "Auto-skip roguelike dialogue"
+
+msgid "自动避险"
+msgstr "Auto-avoid danger"
+
+msgid "自动释放技能"
+msgstr "Auto-cast skills"
+
+msgid "自动钓鱼"
+msgstr "Auto Fishing"
+
+msgid "自动飞枪80护送（无需巧手）【需要游戏处于前台】"
+msgstr "Auto flying spear 80 escort (no skill required) [Game must be in the foreground]"
+
+msgid "自动驱离"
+msgstr "Auto Repel"
+
+msgid "范例: 3,5,8"
+msgstr "Example: 3,5,8"
+
+msgid "解密失败自动重开"
+msgstr "Auto-restart on decryption failure"
+
+msgid "超时后将发出提示"
+msgstr "An alert will be issued after timeout"
+
+msgid "超时后将重启任务"
+msgstr "The task will restart after timeout"
+
+msgid "超时时间"
+msgstr "Timeout"
+
+msgid "轮次"
+msgstr "Wave"
+
+msgid "选择mod目录下的外部逻辑"
+msgstr "Select external logic from the mod directory"
+
+msgid "选择要自动执行的地图类型"
+msgstr "Select the map type to auto-run"
+
+msgid "通用型半自动"
+msgstr "General Semi-automatic"
+
+msgid "释放后等待几秒"
+msgstr "Wait a few seconds after casting"
+
+msgid "释放间隔"
+msgstr "Cast interval"
+
+msgid "键盘"
+msgstr "Keyboard"
+
+msgid "间隔时间"
+msgstr "Interval Time"
+
+msgid "防止鼠标干扰"
+msgstr "Prevent mouse interference"
+
+msgid "随便搞的，基于2k写的其他分辨率要是有问题就不管了，有bug也不用反馈因为拿到巧手后就不维护了(狗头)"
+msgstr "Just threw this together, it's based on 2k so if other resolutions have issues I'm not gonna deal with it. No need to report bugs either because I won't maintain it after getting the skill (kappa)"
+
+msgid "随机游走"
+msgstr "Random Walk"
+
+msgid "需主动激活"
+msgstr "Requires manual activation"
+
+msgid "需主动激活，运行中也可使用左键打断"
+msgstr "Requires manual activation, can be interrupted with the left mouse button during operation"
+
+msgid "需主动激活，运行中可使用右键或左键打断"
+msgstr "Requires manual activation, can be interrupted with the right or left mouse button during operation"
+
+msgid "魔灵支援"
+msgstr "Geniemon Support"
+
+msgid "默认"
+msgstr "Default"
+
+msgid "鼠标抖动"
+msgstr "Mouse Jitter"
+
+msgid "鼠标抖动锁定在窗口范围"
+msgstr "Lock mouse jitter within the window"
+
+msgid "鼠标键或键盘按键"
+msgstr "Mouse button or keyboard key"
+
+msgid "使用飞枪等存在视角移动的外部逻辑时可以启用"
+msgstr "Enable when using external logic involving camera movement, such as the Flying Gun."
+
+msgid "关闭抖动"
+msgstr "Disable Shake"
+
+msgid "Ctrl+战技（赛琪专属）"
+msgstr "Ctrl+Combat Skill (Psyche Only)"
+
+msgid "任务设定"
+msgstr "Quest Setup"
+
+msgid "Aim X-axis sensitivity"
+msgstr ""
+
+msgid "Aim Y-axis sensitivity"
+msgstr ""
+
+msgid "自动苏乙终结技"
+msgstr "Auto Suyi Ultimate"

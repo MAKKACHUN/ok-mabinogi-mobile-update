@@ -1,0 +1,175 @@
+import os
+
+import numpy as np
+from ok import ConfigOption
+from src.process_feature import process_feature
+
+version = "v0.9.0"
+#不需要修改version, Github Action打包会自动修改
+
+key_config_option = ConfigOption('Game Hotkey Config', { #全局配置示例
+    'Interact Key': 'f',
+    'Combat Key': 'e',
+    'Ultimate Key': 'q',
+    'Geniemon Key': 'z',
+    'Dodge Key': 'lshift',
+    'HelixLeap Key': '4'
+}, description='In Game Hotkey for Skills', config_type={
+    'Interact Key': {'type': 'drop_down', 'options': ['f', 'e']}
+})
+
+sensitivity_config_option = ConfigOption('Game Sensitivity Config', { #全局配置示例
+    'Game Sensitivity Switch': False,
+    'X-axis sensitivity': 1.0,
+    'Y-axis sensitivity': 1.0,
+    'Aim X-axis sensitivity': 1.0,
+    'Aim Y-axis sensitivity': 1.0
+}, description='Game Sensitivity Description')
+
+afk_config_option = ConfigOption('挂机设置', { #全局配置示例
+    "提示音": True,
+    '提示音次数': 2,
+    '弹出通知': True,
+    '防止鼠标干扰': True,
+    '鼠标抖动': True,
+    '鼠标抖动锁定在窗口范围': True,
+}, description='挂机相关设置', config_description={
+    "提示音": "在需要时发出声音提醒",
+    '提示音次数': '单次提示响几次',
+    '弹出通知': '是否弹出windows通知',
+    '防止鼠标干扰': '启动任务时和特定场景下会将鼠标移动到安全位置',
+    '鼠标抖动': '建议启用',
+    '鼠标抖动锁定在窗口范围': '建议启用, 鼠标抖动时如果不在窗口范围则设置到窗口范围内',
+})
+
+monthly_card_config_option = ConfigOption('Monthly Card Config', {
+    'Check Monthly Card': False,
+    'Monthly Card Time': 5
+}, description='Turn on to avoid interruption by monthly card when executing tasks', config_description={
+    'Check Monthly Card': 'Check for monthly card to avoid interruption of tasks',
+    'Monthly Card Time': 'Your computer\'s local time when the monthly card will popup, hour in (1-24)'
+})
+
+def make_bottom_right_black(frame): #可选. 某些游戏截图时遮挡UID使用
+    """
+    Changes a portion of the frame's pixels at the bottom middle to black.
+
+    Args:
+        frame: The input frame (NumPy array) from OpenCV.
+
+    Returns:
+        The modified frame with the bottom-right corner blackened.  Returns the original frame
+        if there's an error (e.g., invalid frame).
+    """
+    try:
+        height, width = frame.shape[:2]  # Get height and width
+
+        # Calculate the size of the black rectangle
+        black_width = int(0.13 * width)
+        black_height = int(0.025 * height)
+
+        # Calculate the starting coordinates of the rectangle
+        start_x = width // 2 - black_width // 2
+        end_x = start_x + black_width
+        start_y = height - black_height
+
+        # Create a black rectangle (NumPy array of zeros)
+        black_rect = np.zeros((black_height, black_width, frame.shape[2]), dtype=frame.dtype)  # Ensure same dtype
+
+        # Replace the bottom-middle portion of the frame with the black rectangle
+        frame[start_y:height, start_x:end_x] = black_rect
+
+        return frame
+    except Exception as e:
+        print(f"Error processing frame: {e}")
+        return frame
+
+config = {
+    'custom_tasks': True, # enable creating and editing custom tasks
+    'debug': False,  # Optional, default: False
+    'use_gui': True, # 目前只支持True
+    'config_folder': 'configs', #最好不要修改
+    'global_configs': [key_config_option, sensitivity_config_option, afk_config_option, monthly_card_config_option],
+    # 'screenshot_processor': make_bottom_right_black, # 在截图的时候对frame进行修改, 可选
+    'gui_icon': 'icons/icon.png', #窗口图标, 最好不需要修改文件名
+    'wait_until_before_delay': 0,
+    'wait_until_check_delay': 0,
+    'wait_until_settle_time': 0, #调用 wait_until时候, 在第一次满足条件的时候, 会等待再次检测, 以避免某些滑动动画没到预定位置就在动画路径中被检测到
+    'ocr': { #可选, 使用的OCR库
+        'lib': 'onnxocr',
+        'params': {
+            'use_openvino': True,
+        }
+    },
+    'windows': {  # required  when supporting windows game
+        'exe': ['MabinogiMobile.exe'],
+        # 'hwnd_class': 'UnityWndClass', #增加重名检查准确度
+        'interaction': 'PostMessage', #支持大多数PC游戏后台点击
+        'capture_method': ['WGC', 'BitBlt_RenderFull'],  # Windows版本支持的话, 优先使用WGC, 否则使用BitBlt_Full
+        'check_hdr': False, #当用户开启AutoHDR时候提示用户, 但不禁止使用
+        'force_no_hdr': False, #True=当用户开启AutoHDR时候禁止使用
+    },
+    'start_timeout': 120,  # default 60
+    'window_size': { #ok-script窗口大小
+        'width': 1200,
+        'height': 800,
+        'min_width': 600,
+        'min_height': 450,
+    },
+    'supported_resolution': {
+        'ratio': '16:9', #支持的游戏分辨率
+        'min_size': (1600, 900), #支持的最低游戏分辨率
+        'resize_to': [(2560, 1440), (1920, 1080), (1600, 900)], #可选, 如果非16:9自动缩放为 resize_to
+    },
+    'links': { # 关于里显示的链接, 可选
+            'default': {
+                'github': 'https://github.com/MAKKACHUN/ok-mabinogi-mobile',
+                'faq': 'https://github.com/MAKKACHUN/ok-mabinogi-mobile/blob/main/README.md'
+            }
+        },
+    'about': """
+        <p style="color:red;">
+        <strong>本软件是免费开源的。</strong> 如果你被收费，请立即退款。请访问 GitHub 下载最新的官方版本。<br>
+        <strong>This software is free and open-source.</strong> If you were charged for it, please request a refund immediately. Visit GitHub to download the latest official version.
+        </p>
+
+        <p style="color:red;">
+            <strong>本软件仅供个人使用，用于学习 Python 编程、计算机视觉、UI 自动化等。</strong> 请勿将其用于任何营利性或商业用途。<br>
+            <strong>This software is for personal use only, intended for learning Python programming, computer vision, UI automation, and similar purposes.</strong> Do not use it for any commercial or profit-seeking activities.
+        </p>
+
+        <p style="color:red;">
+            <strong>使用本软件可能会导致账号被封。</strong> 请在了解风险后再使用。<br>
+            <strong>Using this software may result in account bans.</strong> Please proceed only if you fully understand the risks.
+        </p>
+    """,
+    'screenshots_folder': "screenshots", #截图存放目录, 每次重新启动会清空目录
+    'gui_title': 'ok-mabinogi-mobile',  # Optional
+    'template_matching': {
+        'coco_feature_json': os.path.join(
+            'assets',
+            'coco_annotations.json',
+        ),
+
+        # 全域預設搜尋偏移。
+        #
+        # 1600x900：
+        # horizontal 0.02 ≈ 左右 ±32px
+        # vertical   0.03 ≈ 上下 ±27px
+        #
+        # 用嚟容許一般 UI 有少量位置偏移。
+        'default_horizontal_variance': 0.02,
+        'default_vertical_variance': 0.03,
+
+        'default_threshold': 0.8,
+        'feature_processor': process_feature,
+    },
+    'version': version, #版本
+    'my_app': ['src.globals', 'Globals'], # 全局单例对象, 可以存放加载的模型, 使用og.my_app调用
+    'onetime_tasks': [  # tasks to execute
+        ["src.plugins.wild_boss.tasks.AutoWildBossTask", "AutoWildBossTask"],
+        ["src.plugins.gather.tasks.AutoGatherTask", "AutoGatherTask"],
+    ],
+    'trigger_tasks': [],
+    'scene': ["src.scene.DNAScene", "DNAScene"],
+}

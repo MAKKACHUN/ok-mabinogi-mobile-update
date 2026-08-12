@@ -1,0 +1,565 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: you@example.com\n"
+"Last-Translator: you@example.com\n"
+"Language-Team: English\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "100%"
+msgstr ""
+
+msgid "200%"
+msgstr ""
+
+msgid "2000%"
+msgstr ""
+
+msgid "800%"
+msgstr ""
+
+msgid "Auto Pick"
+msgstr ""
+
+msgid "Auto Pick in Game World"
+msgstr ""
+
+msgid "Check Monthly Card"
+msgstr ""
+
+msgid "Check for monthly card to avoid interruption of tasks"
+msgstr ""
+
+msgid "Combat Key"
+msgstr ""
+
+msgid "Dodge Key"
+msgstr ""
+
+msgid "END_WAIT_SPACE"
+msgstr ""
+
+msgid "F10"
+msgstr ""
+
+msgid "F11"
+msgstr ""
+
+msgid "F12"
+msgstr ""
+
+msgid "F9"
+msgstr ""
+
+msgid "Game Hotkey Config"
+msgstr ""
+
+msgid "Game Sensitivity Config"
+msgstr ""
+
+msgid "Game Sensitivity Description"
+msgstr ""
+
+msgid "Game Sensitivity Switch"
+msgstr ""
+
+msgid "Geniemon Key"
+msgstr ""
+
+msgid "HelixLeap Key"
+msgstr ""
+
+msgid "In Game Hotkey for Skills"
+msgstr ""
+
+msgid "Interact Key"
+msgstr ""
+
+msgid "MAX_END_SEC"
+msgstr ""
+
+msgid "MAX_FIGHT_SEC"
+msgstr ""
+
+msgid "MAX_ROUNDS"
+msgstr ""
+
+msgid "MAX_START_SEC"
+msgstr ""
+
+msgid "Monthly Card Config"
+msgstr ""
+
+msgid "Monthly Card Time"
+msgstr ""
+
+msgid "Turn on to avoid interruption by monthly card when executing tasks"
+msgstr ""
+
+msgid "Ultimate Key"
+msgstr ""
+
+msgid "X-axis sensitivity"
+msgstr ""
+
+msgid "Y-axis sensitivity"
+msgstr ""
+
+msgid "Your computer's local time when the monthly card will popup, hour in (1-24)"
+msgstr ""
+
+msgid "e"
+msgstr ""
+
+msgid "f"
+msgstr ""
+
+msgid "right"
+msgstr ""
+
+msgid "x1"
+msgstr ""
+
+msgid "x2"
+msgstr ""
+
+msgid "不使用"
+msgstr "No usar"
+
+msgid "不重开时会发出声音提示"
+msgstr "Se emitirá una alerta sonora si la tarea no se reinicia"
+
+msgid "不需要按开始"
+msgstr "No es necesario presionar Iniciar"
+
+msgid "主画面侦测"
+msgstr "Detección de pantalla principal"
+
+msgid "使用外部移动逻辑自动打本"
+msgstr "Usar lógica de movimiento externa para mazmorras automáticas"
+
+msgid "使用键盘"
+msgstr "Usar teclado"
+
+msgid "全局任务设定"
+msgstr "Configuración de tareas globales"
+
+msgid "全局技能设定"
+msgstr "Configuración de habilidades globales"
+
+msgid "全自动"
+msgstr "Totalmente automático"
+
+msgid ""
+"全自动80护送 (源自emt)，欢迎作者署名。\n"
+"装备：水母 + 0精春玦戟。设置：水平灵敏度和垂直灵敏度1.0，镜头距离1.3，帧率120。\n"
+"魔之楔：金色迅捷+5 / 紫色穿引共鸣 / 紫色迅捷蓄势+5 / 紫色迅捷坠击+5（面板攻速1.67）。"
+msgstr ""
+"Escolta 80 totalmente automática (de emt), se agradece la atribución del autor.\n"
+"Equipo: Medusa + Alabarda de jade de primavera refinada 0. Ajustes: Sensibilidad horizontal y vertical 1.0, distancia de la cámara 1.3, velocidad de fotogramas 120.\n"
+"Cuña del demonio: Rapidez dorada+5 / Tirón de resonancia púrpura / Carga de rapidez púrpura+5 / Caída en picado de rapidez púrpura+5 (velocidad de ataque del panel 1.67)."
+
+msgid "副本类型"
+msgstr "Tipo de mazmorra"
+
+msgid "半自动"
+msgstr "Semiautomático"
+
+msgid "半自动 (只有基础操作)"
+msgstr "Semiautomático (solo operaciones básicas)"
+
+msgid "单次提示响几次"
+msgstr "Cuántas veces sonar para un solo aviso"
+
+msgid "右键按住多久(秒)"
+msgstr "Cuánto tiempo mantener presionado el botón derecho del ratón (segundos)"
+
+msgid "右键释放后等待多久(秒)"
+msgstr "Cuánto tiempo esperar después de soltar el botón derecho del ratón (segundos)"
+
+msgid "启动任务时和特定场景下会将鼠标移动到安全位置"
+msgstr "Mueve el ratón a una posición segura al iniciar una tarea y en escenarios específicos"
+
+msgid "启动机关解锁"
+msgstr "Activar mecanismo para desbloquear"
+
+msgid "启用"
+msgstr "Habilitar"
+
+msgid "在需要时发出声音提醒"
+msgstr "Reproducir un recordatorio sonoro cuando sea necesario"
+
+msgid "在需要时启用触发任务的自动穿引共鸣"
+msgstr "Habilitar Tirón de resonancia automático para activar tareas cuando sea necesario"
+
+msgid "在需要时启用触发任务的自动花弓"
+msgstr "Habilitar Arco floral automático para activar tareas cuando sea necesario"
+
+msgid "地图选择"
+msgstr "Selección de mapa"
+
+msgid "外部文件夹"
+msgstr "Carpeta externa"
+
+msgid "如果不在可操控角色的画面则结束任务"
+msgstr "Finalizar la tarea si no está en la pantalla del personaje controlable"
+
+msgid "如果是无尽关卡，选择打几个轮次"
+msgstr "Si es un nivel sin fin, elige cuántas oleadas luchar"
+
+msgid "委托手册"
+msgstr "Manual de encargos"
+
+msgid "委托手册指定轮次"
+msgstr "Oleadas especificadas en el Manual de encargos"
+
+msgid "密函处理方式：自动选择第一个密函 / 直接开始 / 等待用户选择"
+msgstr "Modo de cartas secretas: seleccionar la primera / iniciar directamente / esperar al usuario"
+
+msgid "自动选择第一个密函"
+msgstr "Seleccionar la primera carta secreta"
+
+msgid "直接开始"
+msgstr "Iniciar directamente"
+
+msgid "等待用户选择"
+msgstr "Esperar a que el usuario elija"
+
+msgid "默认选择"
+msgstr "Selección predeterminada"
+
+msgid "密函奖励选择策略：默认选择 / 持有数为0 / 持有数最少 / 持有数最多 / 等待用户选择"
+msgstr "Estrategia de recompensa: predeterminado / cantidad=0 / menor / mayor / esperar al usuario"
+
+msgid "密函奖励偏好"
+msgstr "Preferencia de recompensa de carta secreta"
+
+msgid "左键按住多久"
+msgstr "Cuánto tiempo mantener presionado el botón izquierdo del ratón"
+
+msgid "左键释放后等待多久"
+msgstr "Cuánto tiempo esperar después de soltar el botón izquierdo del ratón"
+
+msgid "建议启用"
+msgstr "Se recomienda habilitar"
+
+msgid "建议启用, 鼠标抖动时如果不在窗口范围则设置到窗口范围内"
+msgstr "Se recomienda habilitar. Si el ratón está fuera de la ventana durante la vibración del ratón, se moverá dentro de la ventana"
+
+msgid "开始阶段超时(秒)"
+msgstr "Tiempo de espera de la fase de inicio (segundos)"
+
+msgid "开局向前走"
+msgstr "Avanzar al inicio"
+
+msgid "开局向前走几秒"
+msgstr "Cuántos segundos avanzar al inicio"
+
+msgid "开局重置角色位置"
+msgstr "Restablecer la posición del personaje al inicio"
+
+msgid "弹出通知"
+msgstr "Notificación emergente"
+
+msgid "必须勾选才能执行任务！"
+msgstr "¡Debe estar marcado para ejecutar la tarea!"
+
+msgid "我已阅读注意事项并确认配置"
+msgstr "He leído las notas y confirmado la configuración"
+
+msgid "战技"
+msgstr "Habilidad de combate"
+
+msgid "打几个轮次"
+msgstr "Cuántas oleadas luchar"
+
+msgid "扼守无尽"
+msgstr "Defensa sin fin"
+
+msgid "技能"
+msgstr "Habilidad"
+
+msgid "技能1"
+msgstr "Habilidad 1"
+
+msgid "技能1_释放后等待"
+msgstr "Habilidad 1_Esperar después de lanzar"
+
+msgid "技能1_释放频率"
+msgstr "Habilidad 1_Frecuencia de lanzamiento"
+
+msgid "技能2"
+msgstr "Habilidad 2"
+
+msgid "技能2_释放后等待"
+msgstr "Habilidad 2_Esperar después de lanzar"
+
+msgid "技能2_释放频率"
+msgstr "Habilidad 2_Frecuencia de lanzamiento"
+
+msgid "技能3"
+msgstr "Habilidad 3"
+
+msgid "技能3_释放后等待"
+msgstr "Habilidad 3_Esperar después de lanzar"
+
+msgid "技能3_释放频率"
+msgstr "Habilidad 3_Frecuencia de lanzamiento"
+
+msgid "技能4"
+msgstr "Habilidad 4"
+
+msgid "技能4_释放后等待"
+msgstr "Habilidad 4_Esperar después de lanzar"
+
+msgid "技能4_释放频率"
+msgstr "Habilidad 4_Frecuencia de lanzamiento"
+
+msgid "持有数为0"
+msgstr "La cantidad es 0"
+
+msgid "持有数最多"
+msgstr "Cantidad más alta"
+
+msgid "持有数最少"
+msgstr "Cantidad más baja"
+
+msgid "挂机模式"
+msgstr "Modo AFK"
+
+msgid "挂机相关设置"
+msgstr "Configuración relacionada con AFK"
+
+msgid "挂机设置"
+msgstr "Configuración de AFK"
+
+msgid "指定优先选择的奖励类型，需开启「自动处理密函」"
+msgstr "Especificar el tipo de recompensa preferido, requiere que 'Procesar cartas secretas automáticamente' esté habilitado"
+
+msgid "按下时间"
+msgstr "Duración de la pulsación"
+
+msgid "按住普攻"
+msgstr "Mantener ataque normal"
+
+msgid "探险平地"
+msgstr "Exploración Llanura"
+
+msgid "探险无尽"
+msgstr "Exploración Sin fin"
+
+msgid "探险电梯"
+msgstr "Exploración Ascensor"
+
+msgid "探险高台"
+msgstr "Exploración Plataforma alta"
+
+msgid "提示音"
+msgstr "Sonido de alerta"
+
+msgid "提示音次数"
+msgstr "Número de alertas"
+
+msgid "无悠闲全自动钓鱼 (原作者: B站无敌大蜜瓜)"
+msgstr "Pesca totalmente automática sin ocio (Autor original: InvincibleBigMelon de Bilibili)"
+
+msgid "是否在任务中随机移动"
+msgstr "Moverse aleatoriamente durante la tarea"
+
+msgid "是否弹出windows通知"
+msgstr "Mostrar notificaciones de Windows"
+
+msgid "普攻"
+msgstr "Ataque normal"
+
+msgid "最大轮数，鱼塘每天上限为100次"
+msgstr "Oleadas máximas, el límite diario para el lugar de pesca es de 100 veces"
+
+msgid "每几秒释放一次技能"
+msgstr "Lanzar habilidad cada pocos segundos"
+
+msgid "每轮结束等待时间(秒)"
+msgstr "Tiempo de espera al final de cada oleada (segundos)"
+
+msgid "波次超时后将发出提示"
+msgstr "Se emitirá una alerta después de que la oleada se agote"
+
+msgid "溜鱼阶段超时(秒)"
+msgstr "Tiempo de espera de la fase de lucha con el pez (segundos)"
+
+msgid "激活键"
+msgstr "Tecla de activación"
+
+msgid "示例-无巧手30火突破素材(1080p) by望目"
+msgstr "Ejemplo - Material de avance de fuego 30 sin habilidad (1080p) por 望目"
+
+msgid "移动延迟（秒）"
+msgstr "Retraso de movimiento (segundos)"
+
+msgid "终结技"
+msgstr "Definitiva"
+
+msgid "结束阶段超时(秒)"
+msgstr "Tiempo de espera de la fase final (segundos)"
+
+msgid "自动30/65级魔之楔本"
+msgstr "Ejecución automática de Cuña del demonio Nv.30/65"
+
+msgid "自动70级皎皎币本"
+msgstr "Ejecución automática de mazmorra de monedas Jiao Jiao Nv.70"
+
+msgid "自动勘察"
+msgstr "Inspección automática"
+
+msgid "自动处理密函"
+msgstr "Procesar cartas secretas automáticamente"
+
+msgid "自动完成密函的对话交互与默认奖励领取"
+msgstr "Completar automáticamente las interacciones de diálogo de las cartas secretas y reclamar las recompensas predeterminadas"
+
+msgid "自动战斗"
+msgstr "Batalla automática"
+
+msgid "自动扼守"
+msgstr "Defensa automática"
+
+msgid "自动探险"
+msgstr "Exploración automática"
+
+msgid "自动探险/无尽"
+msgstr "Exploración automática/Sin fin"
+
+msgid "自动穿引共鸣"
+msgstr "Tirón de resonancia automático"
+
+msgid "自动肉鸽对话"
+msgstr "Diálogo roguelike automático"
+
+msgid "自动花序弓蓄力瞄准"
+msgstr "Apuntado automático con Arco floral cargado"
+
+msgid "自动花弓"
+msgstr "Arco floral automático"
+
+msgid "自动解锁轮盘"
+msgstr "Desbloqueo automático de rueda"
+
+msgid "自动解锁迷宫"
+msgstr "Desbloqueo automático de laberinto"
+
+msgid "自动识别并进行迷宫解锁"
+msgstr "Identificar y desbloquear automáticamente el laberinto"
+
+msgid "自动跳过肉鸽对话"
+msgstr "Omitir diálogo roguelike automáticamente"
+
+msgid "自动避险"
+msgstr "Evitar peligro automáticamente"
+
+msgid "自动释放技能"
+msgstr "Lanzar habilidades automáticamente"
+
+msgid "自动钓鱼"
+msgstr "Pesca automática"
+
+msgid "自动飞枪80护送（无需巧手）【需要游戏处于前台】"
+msgstr "Escolta 80 con lanza voladora automática (no se requiere habilidad) [El juego debe estar en primer plano]"
+
+msgid "自动驱离"
+msgstr "Repeler automáticamente"
+
+msgid "范例: 3,5,8"
+msgstr "Ejemplo: 3,5,8"
+
+msgid "解密失败自动重开"
+msgstr "Reinicio automático en caso de fallo de descifrado"
+
+msgid "超时后将发出提示"
+msgstr "Se emitirá una alerta después del tiempo de espera"
+
+msgid "超时后将重启任务"
+msgstr "La tarea se reiniciará después del tiempo de espera"
+
+msgid "超时时间"
+msgstr "Tiempo de espera"
+
+msgid "轮次"
+msgstr "Oleada"
+
+msgid "选择mod目录下的外部逻辑"
+msgstr "Seleccionar lógica externa del directorio de mods"
+
+msgid "选择要自动执行的地图类型"
+msgstr "Seleccionar el tipo de mapa para ejecutar automáticamente"
+
+msgid "通用型半自动"
+msgstr "Semiautomático general"
+
+msgid "释放后等待几秒"
+msgstr "Esperar unos segundos después de lanzar"
+
+msgid "释放间隔"
+msgstr "Intervalo de lanzamiento"
+
+msgid "键盘"
+msgstr "Teclado"
+
+msgid "间隔时间"
+msgstr "Tiempo de intervalo"
+
+msgid "防止鼠标干扰"
+msgstr "Prevenir interferencia del ratón"
+
+msgid "随便搞的，基于2k写的其他分辨率要是有问题就不管了，有bug也不用反馈因为拿到巧手后就不维护了(狗头)"
+msgstr "Lo hice de cualquier manera, está basado en 2k así que si hay problemas con otras resoluciones no me haré cargo. Tampoco hace falta reportar bugs porque no lo mantendré después de conseguir la habilidad (kappa)"
+
+msgid "随机游走"
+msgstr "Paseo aleatorio"
+
+msgid "需主动激活"
+msgstr "Requiere activación manual"
+
+msgid "需主动激活，运行中也可使用左键打断"
+msgstr "Requiere activación manual, se puede interrumpir con el botón izquierdo del ratón durante la operación"
+
+msgid "需主动激活，运行中可使用右键或左键打断"
+msgstr "Requiere activación manual, se puede interrumpir con el botón derecho o izquierdo del ratón durante la operación"
+
+msgid "魔灵支援"
+msgstr "Soporte de Geniemon"
+
+msgid "默认"
+msgstr "Predeterminado"
+
+msgid "鼠标抖动"
+msgstr "Vibración del ratón"
+
+msgid "鼠标抖动锁定在窗口范围"
+msgstr "Bloquear la vibración del ratón dentro de la ventana"
+
+msgid "鼠标键或键盘按键"
+msgstr "Botón del ratón o tecla del teclado"
+
+msgid "使用飞枪等存在视角移动的外部逻辑时可以启用"
+msgstr "Habilitar al usar lógica externa que implique movimiento de cámara, como el Arma Voladora."
+
+msgid "关闭抖动"
+msgstr "Desactivar temblor"
+
+msgid "Ctrl+战技（赛琪专属）"
+msgstr "Ctrl+Habil. Combate (Solo Psyche)"
+
+msgid "任务设定"
+msgstr "Opc. Misión"
+
+msgid "Aim X-axis sensitivity"
+msgstr ""
+
+msgid "Aim Y-axis sensitivity"
+msgstr ""
+
+msgid "自动苏乙终结技"
+msgstr "Definitiva Suyi Automática"
