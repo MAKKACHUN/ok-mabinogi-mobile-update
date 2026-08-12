@@ -161,6 +161,12 @@
             "file_name": "images/wild_boss_waiting.png",
             "width": 1600,
             "height": 900
+        },
+        {
+            "id": 29,
+            "file_name": "images/wild_boss_skip_cutscene.png",
+            "width": 1600,
+            "height": 900
         }
     ],
     "annotations": [
@@ -871,12 +877,12 @@
             "image_id": 23,
             "category_id": 55,
             "bbox": [
-                1260,
-                240,
-                110,
-                55
+                1438,
+                251,
+                52,
+                28
             ],
-            "area": 6050,
+            "area": 1456,
             "iscrowd": 0
         },
         {
@@ -942,6 +948,19 @@
                 40
             ],
             "area": 2600,
+            "iscrowd": 0
+        },
+        {
+            "id": 61,
+            "image_id": 29,
+            "category_id": 61,
+            "bbox": [
+                1418,
+                24,
+                142,
+                47
+            ],
+            "area": 6674,
             "iscrowd": 0
         }
     ],
@@ -1244,6 +1263,11 @@
         {
             "id": 60,
             "name": "wild_boss_waiting",
+            "supercategory": ""
+        },
+        {
+            "id": 61,
+            "name": "wild_boss_skip_cutscene",
             "supercategory": ""
         }
     ]

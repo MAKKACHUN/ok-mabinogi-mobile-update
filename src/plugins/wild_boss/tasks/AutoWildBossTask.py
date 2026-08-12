@@ -67,6 +67,7 @@ class AutoWildBossTask(DNAOneTimeTask, BaseDNATask):
     WAITING_FOR_BOSS_FEATURE = "wild_boss_waiting"
     ROOM_READY_FEATURE = "wild_boss_room_ready"
     VICTORY_FEATURE = "wild_boss_victory"
+    SKIP_CUTSCENE_FEATURE = "wild_boss_skip_cutscene"
     EXIT_CONFIRM_FEATURE = "wild_boss_exit_confirm"
 
     BOSS_ROW_Y = (140 / 900, 259 / 900, 378 / 900)
@@ -505,10 +506,7 @@ class AutoWildBossTask(DNAOneTimeTask, BaseDNATask):
         self.ensure_in_front()
         self.send_key("space", down_time=0.3, after_sleep=1.5)
 
-        victory = self.wait_for_feature(
-            self.VICTORY_FEATURE,
-            self.BATTLE_TIMEOUT_SECONDS,
-        )
+        victory = self.wait_for_battle_victory()
         if victory is not None:
             self.log_info(f"已擊敗 {boss_name}，按 ESC 返回房內主畫面")
             self.ensure_in_front()
@@ -597,14 +595,15 @@ class AutoWildBossTask(DNAOneTimeTask, BaseDNATask):
         )
         self.log_info(
             f"已到 {ready_not_before.strftime('%H:%M:%S')}（香港時間）；"
-            f"等待 {boss_name} 動畫完結、31.png 消失及 20.png 出現"
+            f"等待 {boss_name} 動畫完結、31.png 消失及"
+            "右側任務欄『討伐』標記出現"
         )
 
         while now < readiness_deadline:
             if self.is_boss_ready_to_fight():
                 self.log_info(
                     f"{boss_name} 已出現：主畫面正常、"
-                    "31.png 已消失、20.png 已出現"
+                    "31.png 已消失、右側任務欄『討伐』標記已出現"
                 )
                 return True
             self.sleep(self.BOSS_READY_POLL_SECONDS)
@@ -612,7 +611,7 @@ class AutoWildBossTask(DNAOneTimeTask, BaseDNATask):
 
         self.log_info(
             f"等待 {boss_name} 出現逾時；未能同時確認主畫面、"
-            "31.png 消失及 20.png 出現"
+            "31.png 消失及右側任務欄『討伐』標記出現"
         )
         return False
 
@@ -635,6 +634,34 @@ class AutoWildBossTask(DNAOneTimeTask, BaseDNATask):
             vertical_variance=0.04,
             threshold=0.82,
         ) is not None
+
+    def wait_for_battle_victory(self):
+        return self.wait_until(
+            self.find_victory_or_skip_cutscene,
+            time_out=self.BATTLE_TIMEOUT_SECONDS,
+            raise_if_not_found=False,
+        )
+
+    def find_victory_or_skip_cutscene(self):
+        victory = self.find_one(
+            self.VICTORY_FEATURE,
+            horizontal_variance=0.04,
+            vertical_variance=0.04,
+            threshold=0.82,
+        )
+        if victory is not None:
+            return victory
+
+        skip_cutscene = self.find_one(
+            self.SKIP_CUTSCENE_FEATURE,
+            horizontal_variance=0.02,
+            vertical_variance=0.02,
+            threshold=0.82,
+        )
+        if skip_cutscene is not None:
+            self.log_info("偵測到過場動畫，點擊右上角『跳過動畫』")
+            self.move_and_click(skip_cutscene, after_sleep=1.0)
+        return None
 
     def wait_for_feature(self, feature_name: str, timeout: float):
         return self.wait_until(
