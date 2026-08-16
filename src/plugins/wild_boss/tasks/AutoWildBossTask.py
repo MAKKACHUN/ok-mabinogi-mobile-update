@@ -54,6 +54,7 @@ class AutoWildBossTask(DNAOneTimeTask, BaseDNATask):
     BOSS_READY_TIMEOUT_SECONDS = 60
     BOSS_READY_POLL_SECONDS = 1
     BATTLE_TIMEOUT_SECONDS = 120
+    POST_BATTLE_MAIN_CHECK_SECONDS = 10
     EXIT_TIMEOUT_SECONDS = 120
 
     MAIN_SCREEN_FEATURE = "main_screen_marker_leftdown"
@@ -67,7 +68,6 @@ class AutoWildBossTask(DNAOneTimeTask, BaseDNATask):
     ROOM_READY_FEATURE = "wild_boss_room_ready"
     VICTORY_FEATURE = "wild_boss_victory"
     SKIP_CUTSCENE_FEATURE = "wild_boss_skip_cutscene"
-    EXIT_TASK_FEATURE = "wild_boss_exit_task"
     EXIT_CONFIRM_FEATURE = "wild_boss_exit_confirm"
 
     BOSS_ROW_Y = (140 / 900, 259 / 900, 378 / 900)
@@ -506,19 +506,35 @@ class AutoWildBossTask(DNAOneTimeTask, BaseDNATask):
         self.ensure_in_front()
         self.send_key("space", down_time=0.3, after_sleep=1.5)
 
-        battle_complete = self.wait_for_battle_completion()
-        if battle_complete is None:
+        victory = self.wait_for_battle_victory()
+        if victory is not None:
+            self.log_info(f"已擊敗 {boss_name}，按 ESC 返回房內主畫面")
+            self.ensure_in_front()
+            self.send_key("esc", down_time=0.08, after_sleep=1.5)
+            main_screen_timeout = self.EXIT_TIMEOUT_SECONDS
+        else:
             self.log_info(
-                f"等待 {boss_name} 戰鬥完成 2 分鐘逾時；"
-                "未見右側任務欄『的領域』標記"
+                f"等待 {boss_name} 勝利畫面 2 分鐘逾時；"
+                "檢查是否已返回房內主畫面"
+            )
+            main_screen_timeout = self.POST_BATTLE_MAIN_CHECK_SECONDS
+
+        room_main_screen = self.wait_until(
+            self.is_main_screen,
+            time_out=main_screen_timeout,
+            raise_if_not_found=False,
+        )
+        if not room_main_screen:
+            self.log_info(
+                f"戰鬥完成後找不到 {boss_name} 房內主畫面"
             )
             return False
 
         self.log_info(
-            f"已辨識 {boss_name} 房內『的領域』標記，"
-            "點擊任務文字開啟離開提示"
+            f"已辨識 {boss_name} 房內主畫面，按 Space 開啟離開提示"
         )
-        self.move_and_click(battle_complete, after_sleep=1.5)
+        self.ensure_in_front()
+        self.send_key("space", down_time=0.1, after_sleep=1.5)
 
         exit_confirm = self.wait_for_feature(
             self.EXIT_CONFIRM_FEATURE,
@@ -619,15 +635,14 @@ class AutoWildBossTask(DNAOneTimeTask, BaseDNATask):
             threshold=0.82,
         ) is not None
 
-    def wait_for_battle_completion(self):
-        self._battle_victory_confirmed = False
+    def wait_for_battle_victory(self):
         return self.wait_until(
-            self.find_battle_completion_or_handle_overlay,
+            self.find_victory_or_skip_cutscene,
             time_out=self.BATTLE_TIMEOUT_SECONDS,
             raise_if_not_found=False,
         )
 
-    def find_battle_completion_or_handle_overlay(self):
+    def find_victory_or_skip_cutscene(self):
         victory = self.find_one(
             self.VICTORY_FEATURE,
             horizontal_variance=0.04,
@@ -635,11 +650,7 @@ class AutoWildBossTask(DNAOneTimeTask, BaseDNATask):
             threshold=0.82,
         )
         if victory is not None:
-            self.log_info("偵測到 17.png 勝利確認，按 Space 繼續")
-            self.ensure_in_front()
-            self.send_key("space", down_time=0.08, after_sleep=1.0)
-            self._battle_victory_confirmed = True
-            return None
+            return victory
 
         skip_cutscene = self.find_one(
             self.SKIP_CUTSCENE_FEATURE,
@@ -649,28 +660,8 @@ class AutoWildBossTask(DNAOneTimeTask, BaseDNATask):
         )
         if skip_cutscene is not None:
             self.log_info("偵測到過場動畫，點擊右上角『跳過動畫』")
-            self.move_and_click(skip_cutscene, after_sleep=0.1)
-            self.pydirect_interaction.move(
-                int(self.width * 0.5),
-                int(self.height * 0.5),
-            )
-            self.sleep(0.9)
-            return None
-
-        exit_task = self.find_one(
-            self.EXIT_TASK_FEATURE,
-            horizontal_variance=0.04,
-            vertical_variance=0.04,
-            threshold=0.82,
-        )
-        if exit_task is None:
-            return None
-        if not getattr(self, "_battle_victory_confirmed", False):
-            self.log_info(
-                "右側任務欄『的領域』已出現，但仍未見 17.png；繼續等候"
-            )
-            return None
-        return exit_task
+            self.move_and_click(skip_cutscene, after_sleep=1.0)
+        return None
 
     def wait_for_feature(self, feature_name: str, timeout: float):
         return self.wait_until(
