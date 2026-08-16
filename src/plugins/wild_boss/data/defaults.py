@@ -11,6 +11,6 @@ DEFAULT_BOSS_SCHEDULE = BossScheduleSettings(
         BossScheduleItem(False, "12:00", "clama"),
         BossScheduleItem(False, "18:00", "clama"),
     ],
-    lead_minutes=2,
+    lead_minutes=5,
     retry_seconds=60,
 )

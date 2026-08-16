@@ -1,5 +1,5 @@
 import time
-from typing import Protocol, Callable, Union
+from typing import TYPE_CHECKING, Any, Protocol, Callable, Union
 import numpy as np
 import cv2
 import winsound
@@ -73,6 +73,18 @@ class Ticker(Protocol):
 
 class BaseDNATask(BaseTask):
 
+    if TYPE_CHECKING:
+        # ok-script leaves these parameters untyped and Pyright infers int
+        # from zero defaults, although the runtime APIs accept floats.
+        find_one: Any
+
+    BOTTOM_CONFIRM_FEATURE = "bottom_confirm_button"
+    BOTTOM_CONFIRM_ITEM_DELIVERY_FEATURE = (
+        "bottom_confirm_item_delivery_text"
+    )
+    BOTTOM_CONFIRM_CHECK_INTERVAL_SECONDS = 0.5
+    BOTTOM_CONFIRM_RETRY_SECONDS = 2.0
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.key_config = self.get_global_config('Game Hotkey Config')  # 游戏热键配置
@@ -86,19 +98,121 @@ class BaseDNATask(BaseTask):
         self.sensitivity_config = self.get_global_config('Game Sensitivity Config')  # 游戏灵敏度配置
         self.onetime_seen = set()
         self.onetime_queue = deque()
+        self._bottom_confirm_check_enabled = False
+        self._bottom_confirm_last_handled_at = float("-inf")
+
+    def enable_bottom_confirm_check(self) -> None:
+        """Enable bottom confirmation handling during interruptible sleeps."""
+        self._bottom_confirm_check_enabled = True
+        self.sleep_check_interval = (
+            self.BOTTOM_CONFIRM_CHECK_INTERVAL_SECONDS
+        )
+
+    def sleep_check(self) -> None:
+        """Dismiss an unexpected bottom-centre confirmation popup."""
+        if not getattr(self, "_bottom_confirm_check_enabled", False):
+            return
+
+        self.handle_bottom_confirm_popup()
+
+    def handle_bottom_confirm_popup(self) -> bool:
+        """Press Space for a bottom-centre confirmation and report a match."""
+        self._bottom_confirm_did_press = False
+        if not getattr(self, "_bottom_confirm_check_enabled", False):
+            return False
+
+        item_delivery_text = self.find_one(
+            self.BOTTOM_CONFIRM_ITEM_DELIVERY_FEATURE,
+            horizontal_variance=0.03,
+            vertical_variance=0.03,
+            threshold=0.80,
+            canny_lower=50,
+            canny_higher=150,
+        )
+        if item_delivery_text is None:
+            return False
+
+        completion = self.find_one(
+            self.BOTTOM_CONFIRM_FEATURE,
+            horizontal_variance=0.03,
+            vertical_variance=0.03,
+            threshold=0.80,
+            canny_lower=50,
+            canny_higher=150,
+        )
+        matched_by_color = False
+        if completion is None:
+            matched_by_color = self.find_bottom_confirm_color_button()
+        if completion is None and not matched_by_color:
+            return False
+
+        now = time.monotonic()
+        last_handled_at = getattr(
+            self,
+            "_bottom_confirm_last_handled_at",
+            float("-inf"),
+        )
+        if now - last_handled_at < self.BOTTOM_CONFIRM_RETRY_SECONDS:
+            return True
+
+        self._bottom_confirm_last_handled_at = now
+        match_source = "綠色按鈕保底" if matched_by_color else "文字模板"
+        self.log_info(
+            f"偵測到畫面底部『確認』按鈕（{match_source}），按 Space"
+        )
+        self.ensure_in_front()
+        self.send_key("space", down_time=0.08, after_sleep=0)
+        self._bottom_confirm_did_press = True
+        return True
+
+    def find_bottom_confirm_color_button(self, frame=None) -> bool:
+        """Detect the wide green confirmation button used by 37.png."""
+        if frame is None:
+            frame = self.frame
+        if frame is None or frame.size == 0:
+            return False
+
+        height, width = frame.shape[:2]
+        y1 = int(height * 0.82)
+        x1 = int(width * 0.20)
+        x2 = int(width * 0.80)
+        roi = frame[y1:height, x1:x2, :3]
+        hsv = cv2.cvtColor(roi, cv2.COLOR_BGR2HSV)
+        green = cv2.inRange(
+            hsv,
+            np.array([35, 80, 80], dtype=np.uint8),
+            np.array([95, 255, 255], dtype=np.uint8),
+        )
+        component_count, _, stats, _ = cv2.connectedComponentsWithStats(
+            green
+        )
+        for component in range(1, component_count):
+            local_x, local_y, box_width, box_height, area = stats[component]
+            global_x = x1 + int(local_x)
+            global_y = y1 + int(local_y)
+            center_x = global_x + int(box_width) / 2
+            if (
+                global_y >= height * 0.86
+                and box_width >= width * 0.30
+                and box_height >= height * 0.06
+                and area >= width * height * 0.02
+                and width * 0.40 <= center_x <= width * 0.60
+            ):
+                return True
+        return False
 
     @property
     def f_search_box(self) -> Box:
         f_search_box = self.get_box_by_name('pick_up_f')
-        f_search_box = f_search_box.copy(x_offset=f_search_box.width * 3.25,
-                                         width_offset=f_search_box.width * 0.65,
-                                         height_offset=f_search_box.height * 8.7,
-                                         y_offset=-f_search_box.height * 1.7,
+        f_search_box = f_search_box.copy(x_offset=f_search_box.width * 3.25,  # pyright: ignore[reportArgumentType]
+                                         width_offset=f_search_box.width * 0.65,  # pyright: ignore[reportArgumentType]
+                                         height_offset=f_search_box.height * 8.7,  # pyright: ignore[reportArgumentType]
+                                         y_offset=-f_search_box.height * 1.7,  # pyright: ignore[reportArgumentType]
                                          name='search_dialog')
         return f_search_box
 
     @property
-    def thread_pool_executor(self) -> ThreadPoolExecutor:
+    def thread_pool_executor(self) -> ThreadPoolExecutor | None:
         if og.my_app is None:
             return None
         return og.my_app.get_thread_pool_executor()
@@ -109,12 +223,12 @@ class BaseDNATask(BaseTask):
         return og.my_app.submit_periodic_task(delay, task, *args, **kwargs)
     
     @property
-    def shared_frame(self) -> np.ndarray:
-        return og.my_app.shared_frame
+    def shared_frame(self) -> np.ndarray | None:
+        return og.my_app.shared_frame  # pyright: ignore[reportAttributeAccessIssue]
     
     @shared_frame.setter
     def shared_frame(self, value):
-        og.my_app.shared_frame = value
+        og.my_app.shared_frame = value  # pyright: ignore[reportAttributeAccessIssue]
 
     @cached_property
     def genshin_interaction(self):
@@ -478,7 +592,7 @@ class BaseDNATask(BaseTask):
             bool: 如果鼠标在窗口内则返回 True，否则返回 False。
         """
         mouse_x, mouse_y = win32api.GetCursorPos()
-        hwnd_window = og.device_manager.hwnd_window
+        hwnd_window = og.device_manager.hwnd_window  # pyright: ignore[reportAttributeAccessIssue]
         win_x = hwnd_window.x - (hwnd_window.window_width - hwnd_window.width)
         win_y = hwnd_window.y - (hwnd_window.window_height - hwnd_window.height)
 
@@ -520,9 +634,12 @@ class BaseDNATask(BaseTask):
 
         self.sleep(_after_sleep)
 
-    def click_btn_random(self, box: Box, safe_move_box: Box = None, down_time=0.0, post_sleep=0.0, after_sleep=0.0):
-        _safe_move_box = box.copy(x_offset=-box.width*0.20, width_offset=box.width * 8.1,
-                                 y_offset=-box.height*0.30, height_offset=box.height * 0.7, name='safe_move_box')
+    def click_btn_random(self, box: Box, safe_move_box: Box | list[Box] | None = None, down_time=0.0, post_sleep=0.0, after_sleep=0.0):
+        _safe_move_box = box.copy(x_offset=-box.width*0.20,  # pyright: ignore[reportArgumentType]
+                                 width_offset=box.width * 8.1,  # pyright: ignore[reportArgumentType]
+                                 y_offset=-box.height*0.30,  # pyright: ignore[reportArgumentType]
+                                 height_offset=box.height * 0.7,  # pyright: ignore[reportArgumentType]
+                                 name='safe_move_box')
         
         x_range = [box.x + box.width, box.x + self.width * 0.12]
         y_range = [box.y, box.y + box.height]
@@ -605,7 +722,7 @@ class BaseDNATask(BaseTask):
         if not isinstance(box, Box):
             return True
         mouse_x, mouse_y = win32api.GetCursorPos()
-        hwnd_window = og.device_manager.hwnd_window
+        hwnd_window = og.device_manager.hwnd_window  # pyright: ignore[reportAttributeAccessIssue]
         coords = [
             (box.x, box.y),
             (box.x + box.width, box.y + box.height)
@@ -645,7 +762,7 @@ class BaseDNATask(BaseTask):
             if callable(interval):
                 return interval()
             if hasattr(interval, "value"):
-                return interval.value
+                return interval.value  # pyright: ignore[reportAttributeAccessIssue]
             return float(interval)
 
         def tick():
@@ -676,10 +793,10 @@ class BaseDNATask(BaseTask):
             nonlocal armed
             armed = True
 
-        tick.reset = reset
-        tick.touch = touch
-        tick.start_next_tick = start_next_tick
-        return tick
+        tick.reset = reset  # pyright: ignore[reportFunctionMemberAccess]
+        tick.touch = touch  # pyright: ignore[reportFunctionMemberAccess]
+        tick.start_next_tick = start_next_tick  # pyright: ignore[reportFunctionMemberAccess]
+        return tick  # pyright: ignore[reportReturnType]
     
     def create_ticker_group(self, tickers: list):
     
@@ -702,9 +819,9 @@ class BaseDNATask(BaseTask):
                 if hasattr(ticker, "start_next_tick"):
                     ticker.start_next_tick()
 
-        tick_all.reset = reset_all
-        tick_all.touch = touch_all
-        tick_all.start_next_tick = start_next_tick_all
+        tick_all.reset = reset_all  # pyright: ignore[reportFunctionMemberAccess]
+        tick_all.touch = touch_all  # pyright: ignore[reportFunctionMemberAccess]
+        tick_all.start_next_tick = start_next_tick_all  # pyright: ignore[reportFunctionMemberAccess]
         
         return tick_all
 
@@ -770,7 +887,7 @@ class BaseDNATask(BaseTask):
 
     def try_bring_to_front(self):
         if not self.hwnd.is_foreground():
-            def key_press(key, after_sleep=0):
+            def key_press(key, after_sleep: float = 0):
                 win32api.keybd_event(key, 0, 0, 0)
                 win32api.keybd_event(key, 0, win32con.KEYEVENTF_KEYUP, 0)
                 self.sleep(after_sleep)
@@ -938,7 +1055,9 @@ class BaseDNATask(BaseTask):
                     
             self.log_debug("fidget action stopped")
 
-        self.thread_pool_executor.submit(_fidget_worker)
+        self.thread_pool_executor.submit(  # pyright: ignore[reportOptionalMemberAccess]
+            _fidget_worker
+        )
 
 track_point_color = {
     "r": (121, 255),  # Red range

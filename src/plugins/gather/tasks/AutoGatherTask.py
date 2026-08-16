@@ -1,5 +1,6 @@
 import time
 from pathlib import Path
+from typing import TYPE_CHECKING, Any
 
 import win32api  # type: ignore[import-untyped]
 import win32con  # type: ignore[import-untyped]
@@ -53,6 +54,14 @@ class AutoGatherTask(
     DNAOneTimeTask,
     BaseDNATask,
 ):
+    if TYPE_CHECKING:
+        # Framework lifecycle guarantees config exists before task execution,
+        # while its declaration remains optional; numeric APIs accept floats.
+        config: Any
+        find_one: Any
+        send_key: Any
+        wait_until: Any
+
     exclusive_task_group = "automation_schedule"
 
     """
@@ -74,6 +83,7 @@ class AutoGatherTask(
         super().__init__(*args, **kwargs)
 
         self.enable_fidget_action = False
+        self.enable_bottom_confirm_check()
 
         # Page Object
         self.character_page = CharacterPage(self)
@@ -260,7 +270,7 @@ class AutoGatherTask(
         """
 
         try:
-            result = float(value)
+            result = float(value)  # pyright: ignore[reportArgumentType]
 
         except (
             TypeError,

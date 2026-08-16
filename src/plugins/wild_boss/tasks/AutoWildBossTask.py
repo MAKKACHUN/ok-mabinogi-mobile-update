@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 import threading
+import time
 from datetime import datetime, timedelta
 from pathlib import Path
+from typing import TYPE_CHECKING, Any
 
 import cv2
 import numpy as np
@@ -36,6 +38,13 @@ logger = Logger.get_logger(__name__)
 
 
 class AutoWildBossTask(DNAOneTimeTask, BaseDNATask):
+    if TYPE_CHECKING:
+        # ok-script leaves these numeric parameters untyped, so Pyright infers
+        # int from their zero defaults even though the runtime accepts floats.
+        find_one: Any
+        send_key: Any
+        wait_until: Any
+
     exclusive_task_group = "automation_schedule"
     CHECK_INTERVAL_SECONDS = 15
     ENTRY_TIME_CHECK_SECONDS = 10
@@ -54,21 +63,20 @@ class AutoWildBossTask(DNAOneTimeTask, BaseDNATask):
     BOSS_READY_TIMEOUT_SECONDS = 60
     BOSS_READY_POLL_SECONDS = 1
     BATTLE_TIMEOUT_SECONDS = 120
+    EXIT_WAIT_LOG_INTERVAL_SECONDS = 2.0
     EXIT_TIMEOUT_SECONDS = 120
 
     MAIN_SCREEN_FEATURE = "main_screen_marker_leftdown"
-    MENU_FEATURE = "wild_boss_menu"
-    ACTIVE_GO_FEATURE = "wild_boss_go_active"
-    INACTIVE_GO_FEATURE = "wild_boss_go_inactive"
-    MOVE_CONFIRM_FEATURE = "wild_boss_move_confirm"
-    ENTRY_CONFIRM_FEATURE = "wild_boss_entry_confirm"
-    ENTRY_NOT_READY_FEATURE = "wild_boss_entry_not_ready"
-    WAITING_FOR_BOSS_FEATURE = "wild_boss_waiting"
-    ROOM_READY_FEATURE = "wild_boss_room_ready"
-    VICTORY_FEATURE = "wild_boss_victory"
-    SKIP_CUTSCENE_FEATURE = "wild_boss_skip_cutscene"
-    EXIT_TASK_FEATURE = "wild_boss_exit_task"
-    EXIT_CONFIRM_FEATURE = "wild_boss_exit_confirm"
+    MENU_FEATURE = "28_01"
+    MOVE_CONFIRM_FEATURES = ("30_01", "30_02")
+    ENTRY_CONFIRM_FEATURES = ("16_01", "16_02")
+    ENTRY_NOT_READY_FEATURES = ("29_01", "29_02")
+    WAITING_FOR_BOSS_FEATURES = ("31_01", "31_02")
+    ROOM_READY_FEATURES = ("20_01", "33_01", "34_01")
+    VICTORY_FEATURES = ("36_01", "17_01")
+    SKIP_CUTSCENE_FEATURE = "35_01"
+    EXIT_TASK_FEATURE = "18_01"
+    EXIT_CONFIRM_FEATURE = "19_01"
 
     BOSS_ROW_Y = (140 / 900, 259 / 900, 378 / 900)
     BOSS_ROW_X = 139 / 1600
@@ -82,6 +90,7 @@ class AutoWildBossTask(DNAOneTimeTask, BaseDNATask):
         self.group_icon = FluentIcon.CALENDAR
         self.icon = FluentIcon.CALENDAR
         self.enable_fidget_action = False
+        self.enable_bottom_confirm_check()
 
         self.schedule_storage = BossScheduleStorage(
             Path("configs") / "wild_boss_schedule.json"
@@ -124,7 +133,9 @@ class AutoWildBossTask(DNAOneTimeTask, BaseDNATask):
         # ConfigCard treats an empty Config as having no expandable content,
         # even when config_type contains a custom button.  Keep one hidden
         # value so the schedule editor row and expand arrow are rendered.
-        self.config.setdefault("_schedule_editor_available", True)
+        self.config.setdefault(  # pyright: ignore[reportOptionalMemberAccess]
+            "_schedule_editor_available", True
+        )
 
     def open_schedule_dialog(self) -> None:
         parent = QApplication.activeWindow()
@@ -311,8 +322,8 @@ class AutoWildBossTask(DNAOneTimeTask, BaseDNATask):
         self.send_key("space", down_time=0.1, after_sleep=0.8)
 
         move_confirm = self.wait_until(
-            lambda: self.find_one(
-                self.MOVE_CONFIRM_FEATURE,
+            lambda: self.find_all_features(
+                self.MOVE_CONFIRM_FEATURES,
                 horizontal_variance=0.04,
                 vertical_variance=0.04,
                 threshold=0.8,
@@ -321,7 +332,9 @@ class AutoWildBossTask(DNAOneTimeTask, BaseDNATask):
             raise_if_not_found=False,
         )
         if move_confirm is None:
-            raise RuntimeError("第一下 Space 後找不到移動確認視窗（30.png）")
+            raise RuntimeError(
+                "第一下 Space 後找不到移動確認組合（30_01 + 30_02）"
+            )
 
         self.log_info(
             f"已辨識移動確認視窗，按第二下 Space 前往 {boss_name}"
@@ -433,8 +446,11 @@ class AutoWildBossTask(DNAOneTimeTask, BaseDNATask):
         self.send_key("s", down_time=2.0, after_sleep=1.0)
 
     def find_entry_dialog_state(self) -> str | None:
-        confirm = self.find_one(
-            self.ENTRY_CONFIRM_FEATURE,
+        if self.handle_bottom_confirm_popup():
+            return None
+
+        confirm = self.find_all_features(
+            self.ENTRY_CONFIRM_FEATURES,
             horizontal_variance=0.04,
             vertical_variance=0.04,
             threshold=0.8,
@@ -442,8 +458,8 @@ class AutoWildBossTask(DNAOneTimeTask, BaseDNATask):
         if confirm is not None:
             return "confirm"
 
-        not_ready = self.find_one(
-            self.ENTRY_NOT_READY_FEATURE,
+        not_ready = self.find_all_features(
+            self.ENTRY_NOT_READY_FEATURES,
             horizontal_variance=0.04,
             vertical_variance=0.04,
             threshold=0.8,
@@ -506,27 +522,12 @@ class AutoWildBossTask(DNAOneTimeTask, BaseDNATask):
         self.ensure_in_front()
         self.send_key("space", down_time=0.3, after_sleep=1.5)
 
-        battle_complete = self.wait_for_battle_completion()
-        if battle_complete is None:
-            self.log_info(
-                f"等待 {boss_name} 戰鬥完成 2 分鐘逾時；"
-                "未見右側任務欄『的領域』標記"
-            )
-            return False
-
-        self.log_info(
-            f"已辨識 {boss_name} 房內『的領域』標記，"
-            "點擊任務文字開啟離開提示"
-        )
-        self.move_and_click(battle_complete, after_sleep=1.5)
-
-        exit_confirm = self.wait_for_feature(
-            self.EXIT_CONFIRM_FEATURE,
-            self.EXIT_TIMEOUT_SECONDS,
-        )
+        exit_confirm = self.wait_for_battle_completion()
         if exit_confirm is None:
             self.log_info(
-                f"找不到離開 {boss_name} 房嘅確認提示"
+                f"等待 {boss_name} 戰鬥完成 2 分鐘逾時；"
+                "未能處理 36_01／17_01、底部確認或 18_01"
+                "及離開確認提示"
             )
             return False
 
@@ -579,15 +580,15 @@ class AutoWildBossTask(DNAOneTimeTask, BaseDNATask):
         )
         self.log_info(
             f"已到 {ready_not_before.strftime('%H:%M:%S')}（香港時間）；"
-            f"等待 {boss_name} 動畫完結、31.png 消失及"
-            "右側任務欄『討伐』標記出現"
+            f"等待 {boss_name} 動畫完結、31_01 + 31_02 消失及"
+            "20_01／33_01／34_01 其中一個出現"
         )
 
         while now < readiness_deadline:
             if self.is_boss_ready_to_fight():
                 self.log_info(
                     f"{boss_name} 已出現：主畫面正常、"
-                    "31.png 已消失、右側任務欄『討伐』標記已出現"
+                    "31_01 + 31_02 已消失，而且房間就緒標記已出現"
                 )
                 return True
             self.sleep(self.BOSS_READY_POLL_SECONDS)
@@ -595,16 +596,19 @@ class AutoWildBossTask(DNAOneTimeTask, BaseDNATask):
 
         self.log_info(
             f"等待 {boss_name} 出現逾時；未能同時確認主畫面、"
-            "31.png 消失及右側任務欄『討伐』標記出現"
+            "31_01 + 31_02 消失及房間就緒標記出現"
         )
         return False
 
     def is_boss_ready_to_fight(self) -> bool:
+        if self.handle_bottom_confirm_popup():
+            return False
+
         if not self.is_main_screen():
             return False
 
-        waiting = self.find_one(
-            self.WAITING_FOR_BOSS_FEATURE,
+        waiting = self.find_all_features(
+            self.WAITING_FOR_BOSS_FEATURES,
             horizontal_variance=0.04,
             vertical_variance=0.04,
             threshold=0.8,
@@ -612,8 +616,8 @@ class AutoWildBossTask(DNAOneTimeTask, BaseDNATask):
         if waiting is not None:
             return False
 
-        return self.find_one(
-            self.ROOM_READY_FEATURE,
+        return self.find_any_feature(
+            self.ROOM_READY_FEATURES,
             horizontal_variance=0.04,
             vertical_variance=0.04,
             threshold=0.82,
@@ -621,24 +625,63 @@ class AutoWildBossTask(DNAOneTimeTask, BaseDNATask):
 
     def wait_for_battle_completion(self):
         self._battle_victory_confirmed = False
-        return self.wait_until(
-            self.find_battle_completion_or_handle_overlay,
-            time_out=self.BATTLE_TIMEOUT_SECONDS,
-            raise_if_not_found=False,
+        self._battle_confirm_handled_at = None
+        self._last_exit_wait_log_at = float("-inf")
+        self._monitoring_battle_completion = True
+        try:
+            return self.wait_until(
+                self.find_battle_completion_or_handle_overlay,
+                time_out=self.BATTLE_TIMEOUT_SECONDS,
+                raise_if_not_found=False,
+            )
+        finally:
+            self._monitoring_battle_completion = False
+
+    def handle_bottom_confirm_popup(self) -> bool:
+        monitoring_battle = getattr(
+            self,
+            "_monitoring_battle_completion",
+            False,
         )
+        handled = super().handle_bottom_confirm_popup()
+        if (
+            handled
+            and getattr(self, "_bottom_confirm_did_press", False)
+            and monitoring_battle
+        ):
+            self._battle_victory_confirmed = True
+            self._battle_confirm_handled_at = time.monotonic()
+            self.log_info(
+                "戰鬥監察期間已按底部確認，記錄最近確認時間"
+            )
+        return handled
 
     def find_battle_completion_or_handle_overlay(self):
-        victory = self.find_one(
-            self.VICTORY_FEATURE,
+        exit_confirm = self.find_one(
+            self.EXIT_CONFIRM_FEATURE,
+            horizontal_variance=0.04,
+            vertical_variance=0.04,
+            threshold=0.82,
+        )
+        if exit_confirm is not None:
+            self.log_info("已辨識離開確認提示")
+            return exit_confirm
+
+        if self.handle_bottom_confirm_popup():
+            return None
+
+        victory = self.find_any_feature(
+            self.VICTORY_FEATURES,
             horizontal_variance=0.04,
             vertical_variance=0.04,
             threshold=0.82,
         )
         if victory is not None:
-            self.log_info("偵測到 17.png 勝利確認，按 Space 繼續")
+            self.log_info("偵測到 36_01／17_01 勝利確認，按 Space 繼續")
             self.ensure_in_front()
             self.send_key("space", down_time=0.08, after_sleep=1.0)
             self._battle_victory_confirmed = True
+            self._battle_confirm_handled_at = time.monotonic()
             return None
 
         skip_cutscene = self.find_one(
@@ -666,11 +709,29 @@ class AutoWildBossTask(DNAOneTimeTask, BaseDNATask):
         if exit_task is None:
             return None
         if not getattr(self, "_battle_victory_confirmed", False):
-            self.log_info(
-                "右側任務欄『的領域』已出現，但仍未見 17.png；繼續等候"
+            now = time.monotonic()
+            last_log_at = getattr(
+                self,
+                "_last_exit_wait_log_at",
+                float("-inf"),
             )
+            if now - last_log_at >= self.EXIT_WAIT_LOG_INTERVAL_SECONDS:
+                self._last_exit_wait_log_at = now
+                self.log_info(
+                    "右側任務欄『的領域』已出現，但仍未處理"
+                    "36_01／17_01 或底部確認；繼續等候"
+                )
             return None
-        return exit_task
+
+        self.log_info("已確認戰鬥完成，點擊右側任務欄『的領域』")
+        self.move_and_click(exit_task, after_sleep=0.1)
+        self.pydirect_interaction.move(
+            int(self.width * 0.5),
+            int(self.height * 0.5),
+        )
+        self.log_info("已點擊『的領域』，滑鼠移回畫面中央後繼續辨識")
+        self.sleep(0.9)
+        return None
 
     def wait_for_feature(self, feature_name: str, timeout: float):
         return self.wait_until(
@@ -687,8 +748,8 @@ class AutoWildBossTask(DNAOneTimeTask, BaseDNATask):
     def is_outside_boss_room(self) -> bool:
         if not self.is_main_screen():
             return False
-        room_task = self.find_one(
-            self.ROOM_READY_FEATURE,
+        room_task = self.find_any_feature(
+            self.ROOM_READY_FEATURES,
             horizontal_variance=0.04,
             vertical_variance=0.04,
             threshold=0.82,
@@ -709,6 +770,25 @@ class AutoWildBossTask(DNAOneTimeTask, BaseDNATask):
                 self.log_info(f"按 ESC {attempt} 次後返回主畫面")
                 return True
         return False
+
+    def find_all_features(self, feature_names, **kwargs):
+        """Return the first match only when every named feature is present."""
+        first_match = None
+        for feature_name in feature_names:
+            match = self.find_one(feature_name, **kwargs)
+            if match is None:
+                return None
+            if first_match is None:
+                first_match = match
+        return first_match
+
+    def find_any_feature(self, feature_names, **kwargs):
+        """Return the first available match from an ordered feature group."""
+        for feature_name in feature_names:
+            match = self.find_one(feature_name, **kwargs)
+            if match is not None:
+                return match
+        return None
 
     def is_main_screen(self) -> bool:
         return self.find_one(

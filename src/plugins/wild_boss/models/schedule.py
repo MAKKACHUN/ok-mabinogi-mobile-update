@@ -33,7 +33,7 @@ class BossScheduleItem:
 @dataclass
 class BossScheduleSettings:
     items: list[BossScheduleItem] = field(default_factory=list)
-    lead_minutes: int = 2
+    lead_minutes: int = 5
     retry_seconds: int = 60
 
     def __post_init__(self) -> None:
