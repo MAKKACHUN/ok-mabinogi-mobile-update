@@ -78,10 +78,7 @@ class BaseDNATask(BaseTask):
         # from zero defaults, although the runtime APIs accept floats.
         find_one: Any
 
-    BOTTOM_CONFIRM_FEATURE = "bottom_confirm_button"
-    BOTTOM_CONFIRM_ITEM_DELIVERY_FEATURE = (
-        "bottom_confirm_item_delivery_text"
-    )
+    BOTTOM_CONFIRM_ITEM_DELIVERY_FEATURE = "37_01"
     BOTTOM_CONFIRM_CHECK_INTERVAL_SECONDS = 0.5
     BOTTOM_CONFIRM_RETRY_SECONDS = 2.0
 
@@ -132,20 +129,6 @@ class BaseDNATask(BaseTask):
         if item_delivery_text is None:
             return False
 
-        completion = self.find_one(
-            self.BOTTOM_CONFIRM_FEATURE,
-            horizontal_variance=0.03,
-            vertical_variance=0.03,
-            threshold=0.80,
-            canny_lower=50,
-            canny_higher=150,
-        )
-        matched_by_color = False
-        if completion is None:
-            matched_by_color = self.find_bottom_confirm_color_button()
-        if completion is None and not matched_by_color:
-            return False
-
         now = time.monotonic()
         last_handled_at = getattr(
             self,
@@ -156,50 +139,11 @@ class BaseDNATask(BaseTask):
             return True
 
         self._bottom_confirm_last_handled_at = now
-        match_source = "綠色按鈕保底" if matched_by_color else "文字模板"
-        self.log_info(
-            f"偵測到畫面底部『確認』按鈕（{match_source}），按 Space"
-        )
+        self.log_info("偵測到 37_01 道具交付提示，按 Space")
         self.ensure_in_front()
         self.send_key("space", down_time=0.08, after_sleep=0)
         self._bottom_confirm_did_press = True
         return True
-
-    def find_bottom_confirm_color_button(self, frame=None) -> bool:
-        """Detect the wide green confirmation button used by 37.png."""
-        if frame is None:
-            frame = self.frame
-        if frame is None or frame.size == 0:
-            return False
-
-        height, width = frame.shape[:2]
-        y1 = int(height * 0.82)
-        x1 = int(width * 0.20)
-        x2 = int(width * 0.80)
-        roi = frame[y1:height, x1:x2, :3]
-        hsv = cv2.cvtColor(roi, cv2.COLOR_BGR2HSV)
-        green = cv2.inRange(
-            hsv,
-            np.array([35, 80, 80], dtype=np.uint8),
-            np.array([95, 255, 255], dtype=np.uint8),
-        )
-        component_count, _, stats, _ = cv2.connectedComponentsWithStats(
-            green
-        )
-        for component in range(1, component_count):
-            local_x, local_y, box_width, box_height, area = stats[component]
-            global_x = x1 + int(local_x)
-            global_y = y1 + int(local_y)
-            center_x = global_x + int(box_width) / 2
-            if (
-                global_y >= height * 0.86
-                and box_width >= width * 0.30
-                and box_height >= height * 0.06
-                and area >= width * height * 0.02
-                and width * 0.40 <= center_x <= width * 0.60
-            ):
-                return True
-        return False
 
     @property
     def f_search_box(self) -> Box:

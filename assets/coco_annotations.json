@@ -176,7 +176,7 @@
         },
         {
             "id": 39,
-            "file_name": "images/bottom_confirm_button.png",
+            "file_name": "images/0.png",
             "width": 1600,
             "height": 900
         }
@@ -1045,25 +1045,12 @@
             "image_id": 39,
             "category_id": 67,
             "bbox": [
-                765,
-                805,
-                70,
-                40
+                604,
+                348,
+                386,
+                19
             ],
-            "area": 2800,
-            "iscrowd": 0
-        },
-        {
-            "id": 68,
-            "image_id": 39,
-            "category_id": 68,
-            "bbox": [
-                600,
-                344,
-                395,
-                28
-            ],
-            "area": 11060,
+            "area": 7334,
             "iscrowd": 0
         }
     ],
@@ -1400,23 +1387,8 @@
         },
         {
             "id": 67,
-            "name": "bottom_confirm_button",
-            "supercategory": ""
-        },
-        {
-            "id": 68,
-            "name": "bottom_confirm_item_delivery_text",
+            "name": "37_01",
             "supercategory": ""
         }
-    ],
-    "privacy_keep_regions": {
-        "images/bottom_confirm_button.png": [
-            [
-                480,
-                780,
-                1120,
-                875
-            ]
-        ]
-    }
+    ]
 }
