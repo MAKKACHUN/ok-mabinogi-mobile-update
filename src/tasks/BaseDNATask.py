@@ -76,11 +76,15 @@ class BaseDNATask(BaseTask):
     if TYPE_CHECKING:
         # ok-script leaves these parameters untyped and Pyright infers int
         # from zero defaults, although the runtime APIs accept floats.
+        click: Any
         find_one: Any
+        send_key: Any
+        wait_until: Any
 
     BOTTOM_CONFIRM_ITEM_DELIVERY_FEATURE = "37_01"
     BOTTOM_CONFIRM_CHECK_INTERVAL_SECONDS = 0.5
     BOTTOM_CONFIRM_RETRY_SECONDS = 2.0
+    BOTTOM_CONFIRM_REFRESH_SECONDS = 0.8
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -97,6 +101,8 @@ class BaseDNATask(BaseTask):
         self.onetime_queue = deque()
         self._bottom_confirm_check_enabled = False
         self._bottom_confirm_last_handled_at = float("-inf")
+        self._bottom_confirm_last_scan_at = float("-inf")
+        self._bottom_confirm_action_guard = False
 
     def enable_bottom_confirm_check(self) -> None:
         """Enable bottom confirmation handling during interruptible sleeps."""
@@ -112,38 +118,142 @@ class BaseDNATask(BaseTask):
 
         self.handle_bottom_confirm_popup()
 
+    def check_bottom_confirm_before_action(self) -> bool:
+        """Check 37_01 immediately before a keyboard or click action."""
+        return self._check_bottom_confirm(force=True)
+
+    def check_bottom_confirm_during_wait(self) -> bool:
+        """Check 37_01 at most every 0.5 seconds inside wait loops."""
+        return self._check_bottom_confirm(force=False)
+
+    def _check_bottom_confirm(self, *, force: bool) -> bool:
+        if not getattr(self, "_bottom_confirm_check_enabled", False):
+            return False
+        if getattr(self, "_bottom_confirm_action_guard", False):
+            return False
+
+        now = time.monotonic()
+        last_scan_at = getattr(
+            self,
+            "_bottom_confirm_last_scan_at",
+            float("-inf"),
+        )
+        if (
+            not force
+            and now - last_scan_at
+            < self.BOTTOM_CONFIRM_CHECK_INTERVAL_SECONDS
+        ):
+            return False
+
+        self._bottom_confirm_last_scan_at = now
+        return self.handle_bottom_confirm_popup()
+
+    def send_key(
+        self,
+        key,
+        down_time=0.02,
+        interval=-1,
+        after_sleep=0,
+    ):
+        self.check_bottom_confirm_before_action()
+        return super().send_key(
+            key,
+            down_time=down_time,
+            interval=interval,
+            after_sleep=after_sleep,
+        )
+
+    def click(
+        self,
+        x=-1,
+        y=-1,
+        move_back=False,
+        name=None,
+        interval=-1,
+        move=True,
+        down_time=0.02,
+        after_sleep=0,
+        key="left",
+        hcenter=False,
+        vcenter=False,
+    ):
+        self.check_bottom_confirm_before_action()
+        return super().click(
+            x,
+            y,
+            move_back=move_back,
+            name=name,
+            interval=interval,
+            move=move,
+            down_time=down_time,
+            after_sleep=after_sleep,
+            key=key,
+            hcenter=hcenter,
+            vcenter=vcenter,
+        )
+
+    def wait_until(
+        self,
+        condition,
+        time_out=0,
+        pre_action=None,
+        post_action=None,
+        settle_time=-1,
+        raise_if_not_found=False,
+    ):
+        def condition_with_bottom_confirm_check():
+            if self.check_bottom_confirm_during_wait():
+                return None
+            return condition()
+
+        return super().wait_until(
+            condition_with_bottom_confirm_check,
+            time_out=time_out,
+            pre_action=pre_action,
+            post_action=post_action,
+            settle_time=settle_time,
+            raise_if_not_found=raise_if_not_found,
+        )
+
     def handle_bottom_confirm_popup(self) -> bool:
         """Press Space for a bottom-centre confirmation and report a match."""
         self._bottom_confirm_did_press = False
         if not getattr(self, "_bottom_confirm_check_enabled", False):
             return False
-
-        item_delivery_text = self.find_one(
-            self.BOTTOM_CONFIRM_ITEM_DELIVERY_FEATURE,
-            horizontal_variance=0.03,
-            vertical_variance=0.03,
-            threshold=0.80,
-            canny_lower=50,
-            canny_higher=150,
-        )
-        if item_delivery_text is None:
+        if getattr(self, "_bottom_confirm_action_guard", False):
             return False
 
-        now = time.monotonic()
-        last_handled_at = getattr(
-            self,
-            "_bottom_confirm_last_handled_at",
-            float("-inf"),
-        )
-        if now - last_handled_at < self.BOTTOM_CONFIRM_RETRY_SECONDS:
-            return True
+        self._bottom_confirm_action_guard = True
+        try:
+            item_delivery_text = self.find_one(
+                self.BOTTOM_CONFIRM_ITEM_DELIVERY_FEATURE,
+                horizontal_variance=0.03,
+                vertical_variance=0.03,
+                threshold=0.80,
+                canny_lower=50,
+                canny_higher=150,
+            )
+            if item_delivery_text is None:
+                return False
 
-        self._bottom_confirm_last_handled_at = now
-        self.log_info("偵測到 37_01 道具交付提示，按 Space")
-        self.ensure_in_front()
-        self.send_key("space", down_time=0.08, after_sleep=0)
-        self._bottom_confirm_did_press = True
-        return True
+            now = time.monotonic()
+            last_handled_at = getattr(
+                self,
+                "_bottom_confirm_last_handled_at",
+                float("-inf"),
+            )
+            if now - last_handled_at < self.BOTTOM_CONFIRM_RETRY_SECONDS:
+                return True
+
+            self._bottom_confirm_last_handled_at = now
+            self.log_info("偵測到 37_01 道具交付提示，按 Space")
+            self.ensure_in_front()
+            self.send_key("space", down_time=0.08, after_sleep=0)
+            self._bottom_confirm_did_press = True
+            self.sleep(self.BOTTOM_CONFIRM_REFRESH_SECONDS)
+            return True
+        finally:
+            self._bottom_confirm_action_guard = False
 
     @property
     def f_search_box(self) -> Box:

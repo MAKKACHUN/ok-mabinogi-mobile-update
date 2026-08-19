@@ -4,7 +4,7 @@ import numpy as np
 from ok import ConfigOption
 from src.process_feature import process_feature
 
-version = "v0.9.4"
+version = "v0.9.5"
 #不需要修改version, Github Action打包会自动修改
 
 key_config_option = ConfigOption('Game Hotkey Config', { #全局配置示例
@@ -169,6 +169,7 @@ config = {
     'onetime_tasks': [  # tasks to execute
         ["src.plugins.wild_boss.tasks.AutoWildBossTask", "AutoWildBossTask"],
         ["src.plugins.gather.tasks.AutoGatherTask", "AutoGatherTask"],
+        ["src.plugins.map_events.tasks.AutoMapEventTask", "AutoMapEventTask"],
     ],
     'trigger_tasks': [],
     'scene': ["src.scene.DNAScene", "DNAScene"],

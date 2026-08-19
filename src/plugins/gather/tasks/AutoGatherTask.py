@@ -711,6 +711,7 @@ class AutoGatherTask(
             hover_sleep
         )
 
+        self.check_bottom_confirm_before_action()
         self.pydirect_interaction.click(
             down_time=0.1,
         )
@@ -952,6 +953,7 @@ class AutoGatherTask(
             self.ensure_in_front()
             self.sleep(0.2)
 
+            self.check_bottom_confirm_before_action()
             self.pydirect_interaction.scroll(
                 scroll_x,
                 scroll_y,

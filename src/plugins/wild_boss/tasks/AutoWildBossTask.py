@@ -62,9 +62,13 @@ class AutoWildBossTask(DNAOneTimeTask, BaseDNATask):
     BOSS_READY_DELAY_SECONDS = 10
     BOSS_READY_TIMEOUT_SECONDS = 60
     BOSS_READY_POLL_SECONDS = 1
+    ROOM_READY_MATCH_THRESHOLD = 0.82
+    ROOM_READY_SCORE_FLOOR = -1.0
     BATTLE_TIMEOUT_SECONDS = 120
     EXIT_WAIT_LOG_INTERVAL_SECONDS = 2.0
-    EXIT_TIMEOUT_SECONDS = 120
+    EXIT_ATTEMPT_TIMEOUT_SECONDS = 15
+    EXIT_RETRY_UI_TIMEOUT_SECONDS = 10
+    EXIT_MAX_ATTEMPTS = 3
 
     MAIN_SCREEN_FEATURE = "main_screen_marker_leftdown"
     MENU_FEATURE = "28_01"
@@ -77,6 +81,8 @@ class AutoWildBossTask(DNAOneTimeTask, BaseDNATask):
     SKIP_CUTSCENE_FEATURE = "35_01"
     EXIT_TASK_FEATURE = "18_01"
     EXIT_CONFIRM_FEATURE = "19_01"
+    SECONDARY_EXIT_TASK_FEATURE = "50_01"
+    SECONDARY_EXIT_BUTTON_FEATURE = "50_02"
 
     BOSS_ROW_Y = (140 / 900, 259 / 900, 378 / 900)
     BOSS_ROW_X = 139 / 1600
@@ -279,6 +285,17 @@ class AutoWildBossTask(DNAOneTimeTask, BaseDNATask):
                 self.recover_from_stuck_entrance(boss_name)
                 continue
 
+            if entry_state == "inside_completed_room":
+                self.log_info(
+                    f"前往 {boss_name} 時發現仍在已完成嘅 Boss 房；"
+                    "重新執行離房流程"
+                )
+                if not self.open_exit_confirmation_for_retry():
+                    return False
+                if not self.leave_boss_room(boss_name):
+                    return False
+                continue
+
             self.log_info(
                 f"前往 {boss_name} 後等候逾時，"
                 "找不到入場確認或未開放提示"
@@ -400,7 +417,11 @@ class AutoWildBossTask(DNAOneTimeTask, BaseDNATask):
     def get_minimap_inner_fingerprint(self, frame=None):
         if frame is None:
             frame = self.frame
-        if frame is None or frame.size == 0:
+        if (
+            not isinstance(frame, np.ndarray)
+            or frame.size == 0
+            or frame.ndim < 2
+        ):
             return None
 
         frame_height, frame_width = frame.shape[:2]
@@ -466,6 +487,22 @@ class AutoWildBossTask(DNAOneTimeTask, BaseDNATask):
         )
         if not_ready is not None:
             return "not_ready"
+
+        completed_room = self.find_one(
+            self.EXIT_TASK_FEATURE,
+            horizontal_variance=0.04,
+            vertical_variance=0.04,
+            threshold=0.82,
+        )
+        if completed_room is None:
+            completed_room = self.find_one(
+                self.SECONDARY_EXIT_TASK_FEATURE,
+                horizontal_variance=0.04,
+                vertical_variance=0.04,
+                threshold=0.82,
+            )
+        if completed_room is not None:
+            return "inside_completed_room"
         return None
 
     def wait_until_scheduled_time(
@@ -531,19 +568,7 @@ class AutoWildBossTask(DNAOneTimeTask, BaseDNATask):
             )
             return False
 
-        self.log_info(f"確認離開 {boss_name} 房")
-        self.ensure_in_front()
-        self.send_key("space", down_time=0.08, after_sleep=3.0)
-
-        outside = self.wait_until(
-            self.is_outside_boss_room,
-            time_out=self.EXIT_TIMEOUT_SECONDS,
-            raise_if_not_found=False,
-        )
-        if not outside:
-            self.log_info(
-                f"離開 {boss_name} 房後未能確認返回普通主畫面"
-            )
+        if not self.leave_boss_room(boss_name):
             return False
         return True
 
@@ -578,10 +603,15 @@ class AutoWildBossTask(DNAOneTimeTask, BaseDNATask):
             ),
             now + timedelta(seconds=10),
         )
+        last_bottom_confirm_handled_at = getattr(
+            self,
+            "_bottom_confirm_last_handled_at",
+            float("-inf"),
+        )
         self.log_info(
             f"已到 {ready_not_before.strftime('%H:%M:%S')}（香港時間）；"
             f"等待 {boss_name} 動畫完結、31_01 + 31_02 消失及"
-            "20_01／33_01／34_01 其中一個出現"
+            "20_01／33_01／34_01『在時間內擊敗』其中一個出現"
         )
 
         while now < readiness_deadline:
@@ -591,14 +621,55 @@ class AutoWildBossTask(DNAOneTimeTask, BaseDNATask):
                     "31_01 + 31_02 已消失，而且房間就緒標記已出現"
                 )
                 return True
+
+            (
+                readiness_deadline,
+                last_bottom_confirm_handled_at,
+            ) = self.refresh_boss_ready_deadline_after_bottom_confirm(
+                readiness_deadline,
+                last_bottom_confirm_handled_at,
+                boss_name,
+            )
             self.sleep(self.BOSS_READY_POLL_SECONDS)
             now = self.current_hong_kong_time()
+            (
+                readiness_deadline,
+                last_bottom_confirm_handled_at,
+            ) = self.refresh_boss_ready_deadline_after_bottom_confirm(
+                readiness_deadline,
+                last_bottom_confirm_handled_at,
+                boss_name,
+            )
 
         self.log_info(
             f"等待 {boss_name} 出現逾時；未能同時確認主畫面、"
             "31_01 + 31_02 消失及房間就緒標記出現"
         )
         return False
+
+    def refresh_boss_ready_deadline_after_bottom_confirm(
+        self,
+        readiness_deadline: datetime,
+        last_handled_at: float,
+        boss_name: str,
+    ) -> tuple[datetime, float]:
+        handled_at = getattr(
+            self,
+            "_bottom_confirm_last_handled_at",
+            float("-inf"),
+        )
+        if handled_at <= last_handled_at:
+            return readiness_deadline, last_handled_at
+
+        now = self.current_hong_kong_time()
+        refreshed_deadline = max(
+            readiness_deadline,
+            now + timedelta(seconds=10),
+        )
+        self.log_info(
+            f"已關閉 37_01；重新給 {boss_name} 完整 10 秒房間就緒辨識時間"
+        )
+        return refreshed_deadline, handled_at
 
     def is_boss_ready_to_fight(self) -> bool:
         if self.handle_bottom_confirm_popup():
@@ -616,12 +687,37 @@ class AutoWildBossTask(DNAOneTimeTask, BaseDNATask):
         if waiting is not None:
             return False
 
-        return self.find_any_feature(
-            self.ROOM_READY_FEATURES,
-            horizontal_variance=0.04,
-            vertical_variance=0.04,
-            threshold=0.82,
-        ) is not None
+        return self.find_room_ready_feature_with_scores() is not None
+
+    def find_room_ready_feature_with_scores(self):
+        """Match room-ready text without mutating cached template channels."""
+        scores: dict[str, float] = {}
+        best_match = None
+        best_score = float("-inf")
+
+        for feature_name in self.ROOM_READY_FEATURES:
+            match = self.find_one(
+                feature_name,
+                horizontal_variance=0.04,
+                vertical_variance=0.04,
+                threshold=self.ROOM_READY_SCORE_FLOOR,
+                use_gray_scale=False,
+            )
+            score = float(match.confidence) if match is not None else 0.0
+            scores[feature_name] = score
+            if score >= self.ROOM_READY_MATCH_THRESHOLD and score > best_score:
+                best_match = match
+                best_score = score
+
+        self.log_info(
+            "房間就緒辨識分數："
+            + "、".join(
+                f"{name}={scores[name]:.3f}"
+                for name in self.ROOM_READY_FEATURES
+            )
+            + f"；門檻={self.ROOM_READY_MATCH_THRESHOLD:.2f}"
+        )
+        return best_match
 
     def wait_for_battle_completion(self):
         self._battle_victory_confirmed = False
@@ -700,13 +796,30 @@ class AutoWildBossTask(DNAOneTimeTask, BaseDNATask):
             self.sleep(0.9)
             return None
 
-        exit_task = self.find_one(
+        exit_action = self.find_one(
             self.EXIT_TASK_FEATURE,
             horizontal_variance=0.04,
             vertical_variance=0.04,
             threshold=0.82,
         )
-        if exit_task is None:
+        exit_action_name = "右側任務欄『的領域』"
+        if exit_action is None:
+            secondary_exit_task = self.find_one(
+                self.SECONDARY_EXIT_TASK_FEATURE,
+                horizontal_variance=0.04,
+                vertical_variance=0.04,
+                threshold=0.82,
+            )
+            if secondary_exit_task is not None:
+                exit_action = self.find_one(
+                    self.SECONDARY_EXIT_BUTTON_FEATURE,
+                    horizontal_variance=0.04,
+                    vertical_variance=0.04,
+                    threshold=0.82,
+                )
+                exit_action_name = "第二項『的領域』對應嘅右上角離房圖示"
+
+        if exit_action is None:
             return None
         if not getattr(self, "_battle_victory_confirmed", False):
             now = time.monotonic()
@@ -718,13 +831,14 @@ class AutoWildBossTask(DNAOneTimeTask, BaseDNATask):
             if now - last_log_at >= self.EXIT_WAIT_LOG_INTERVAL_SECONDS:
                 self._last_exit_wait_log_at = now
                 self.log_info(
-                    "右側任務欄『的領域』已出現，但仍未處理"
+                    f"{exit_action_name}已出現，但仍未處理"
                     "36_01／17_01 或底部確認；繼續等候"
                 )
             return None
 
-        self.log_info("已確認戰鬥完成，點擊右側任務欄『的領域』")
-        self.move_and_click(exit_task, after_sleep=0.1)
+        self.capture_boss_room_exit_fingerprint()
+        self.log_info(f"已確認戰鬥完成，點擊{exit_action_name}")
+        self.move_and_click(exit_action, after_sleep=0.1)
         self.pydirect_interaction.move(
             int(self.width * 0.5),
             int(self.height * 0.5),
@@ -745,16 +859,160 @@ class AutoWildBossTask(DNAOneTimeTask, BaseDNATask):
             raise_if_not_found=False,
         )
 
+    def capture_boss_room_exit_fingerprint(self) -> bool:
+        fingerprint = self.get_minimap_inner_fingerprint()
+        if fingerprint is None:
+            self._boss_room_exit_fingerprint = None
+            self.log_info("未能保存 Boss 房小地圖；暫不能確認離房傳送")
+            return False
+
+        self._boss_room_exit_fingerprint = fingerprint.copy()
+        return True
+
+    def leave_boss_room(self, boss_name: str) -> bool:
+        for attempt in range(1, self.EXIT_MAX_ATTEMPTS + 1):
+            self.log_info(
+                f"確認離開 {boss_name} 房（第 {attempt} 次嘗試）"
+            )
+            self.ensure_in_front()
+            self.send_key("space", down_time=0.08, after_sleep=3.0)
+
+            outside = self.wait_until(
+                self.is_outside_boss_room,
+                time_out=self.EXIT_ATTEMPT_TIMEOUT_SECONDS,
+                settle_time=1.0,
+                raise_if_not_found=False,
+            )
+            if outside:
+                difference = getattr(
+                    self,
+                    "_last_exit_minimap_difference",
+                    0.0,
+                )
+                self.log_info(
+                    f"已確認離開 {boss_name} 房；"
+                    f"小地圖地形差異={difference:.2f}"
+                )
+                self._boss_room_exit_fingerprint = None
+                return True
+
+            if attempt >= self.EXIT_MAX_ATTEMPTS:
+                break
+
+            self.log_info(
+                f"第 {attempt} 次離房後小地圖地形冇改變；"
+                "仍在 Boss 房，重新開啟離房確認"
+            )
+            if not self.open_exit_confirmation_for_retry():
+                return False
+
+        self.log_info(
+            f"離開 {boss_name} 房失敗；小地圖一直未確認地形轉換"
+        )
+        return False
+
+    def open_exit_confirmation_for_retry(self) -> bool:
+        existing_confirm = self.find_one(
+            self.EXIT_CONFIRM_FEATURE,
+            horizontal_variance=0.04,
+            vertical_variance=0.04,
+            threshold=0.82,
+        )
+        if existing_confirm is not None:
+            self.log_info("離房確認提示仍然開啟；再次按 Space 確認")
+            return True
+
+        secondary_exit_task = self.find_one(
+            self.SECONDARY_EXIT_TASK_FEATURE,
+            horizontal_variance=0.04,
+            vertical_variance=0.04,
+            threshold=0.82,
+        )
+        if secondary_exit_task is not None:
+            exit_action = self.wait_for_feature(
+                self.SECONDARY_EXIT_BUTTON_FEATURE,
+                self.EXIT_RETRY_UI_TIMEOUT_SECONDS,
+            )
+            exit_action_name = "第二項『的領域』對應嘅右上角離房圖示"
+        else:
+            exit_action = self.wait_for_feature(
+                self.EXIT_TASK_FEATURE,
+                self.EXIT_RETRY_UI_TIMEOUT_SECONDS,
+            )
+            exit_action_name = "右側任務欄『的領域』"
+
+        if exit_action is None:
+            self.log_info("仍在 Boss 房，但找不到可用嘅離房入口")
+            return False
+
+        self.capture_boss_room_exit_fingerprint()
+        self.log_info(f"重新點擊{exit_action_name}")
+        self.move_and_click(exit_action, after_sleep=0.1)
+        self.pydirect_interaction.move(
+            int(self.width * 0.5),
+            int(self.height * 0.5),
+        )
+        self.sleep(0.9)
+
+        exit_confirm = self.wait_for_feature(
+            self.EXIT_CONFIRM_FEATURE,
+            self.EXIT_RETRY_UI_TIMEOUT_SECONDS,
+        )
+        if exit_confirm is None:
+            self.log_info("重新點擊『的領域』後找不到離房確認提示")
+            return False
+        return True
+
     def is_outside_boss_room(self) -> bool:
         if not self.is_main_screen():
             return False
+
+        baseline = getattr(self, "_boss_room_exit_fingerprint", None)
+        current = self.get_minimap_inner_fingerprint()
+        if (
+            baseline is None
+            or current is None
+            or baseline.shape != current.shape
+        ):
+            return False
+
+        difference = float(
+            np.mean(
+                np.abs(
+                    current.astype(np.float32)
+                    - baseline.astype(np.float32)
+                )
+            )
+        )
+        self._last_exit_minimap_difference = difference
+        if difference <= self.MINIMAP_CHANGE_THRESHOLD:
+            return False
+
         room_task = self.find_any_feature(
             self.ROOM_READY_FEATURES,
             horizontal_variance=0.04,
             vertical_variance=0.04,
             threshold=0.82,
         )
-        return room_task is None
+        if room_task is not None:
+            return False
+
+        exit_task = self.find_one(
+            self.EXIT_TASK_FEATURE,
+            horizontal_variance=0.04,
+            vertical_variance=0.04,
+            threshold=0.82,
+        )
+        if exit_task is not None:
+            return False
+
+        secondary_exit_task = self.find_one(
+            self.SECONDARY_EXIT_TASK_FEATURE,
+            horizontal_variance=0.04,
+            vertical_variance=0.04,
+            threshold=0.82,
+        )
+        return secondary_exit_task is None
 
     def ensure_main_screen(self) -> bool:
         if self.is_main_screen():
@@ -803,6 +1061,7 @@ class AutoWildBossTask(DNAOneTimeTask, BaseDNATask):
         if list_index >= len(self.BOSS_ROW_Y):
             scroll_count = list_index - len(self.BOSS_ROW_Y) + 1
             for _ in range(scroll_count):
+                self.check_bottom_confirm_before_action()
                 self.pydirect_interaction.scroll(
                     int(self.width * self.BOSS_ROW_X),
                     int(self.height * self.BOSS_ROW_Y[-1]),
@@ -817,8 +1076,9 @@ class AutoWildBossTask(DNAOneTimeTask, BaseDNATask):
         self.ensure_in_front()
         self.pydirect_interaction.move(x, y)
         self.sleep(0.2)
+        self.check_bottom_confirm_before_action()
         self.pydirect_interaction.click(down_time=0.1)
-        self.sleep(1.5)
+        self.return_mouse_to_center_after_click(after_sleep=1.5)
 
     def move_and_click(self, box, after_sleep: float = 1.0) -> None:
         x = int(box.x + box.width / 2)
@@ -829,5 +1089,16 @@ class AutoWildBossTask(DNAOneTimeTask, BaseDNATask):
         self.ensure_in_front()
         self.pydirect_interaction.move(x, y)
         self.sleep(0.2)
+        self.check_bottom_confirm_before_action()
         self.pydirect_interaction.click(down_time=0.1)
-        self.sleep(after_sleep)
+        self.return_mouse_to_center_after_click(after_sleep=after_sleep)
+
+    def return_mouse_to_center_after_click(
+        self, after_sleep: float = 1.0
+    ) -> None:
+        """Let Unity consume the click before moving the real cursor away."""
+        self.sleep(1.0)
+        self.pydirect_interaction.move(self.width // 2, self.height // 2)
+        remaining_sleep = max(0.0, after_sleep - 1.0)
+        if remaining_sleep > 0:
+            self.sleep(remaining_sleep)
