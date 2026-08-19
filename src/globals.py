@@ -4,6 +4,13 @@ import concurrent.futures
 from qfluentwidgets import DoubleSpinBox
 from PySide6.QtWidgets import QApplication
 from ok import Logger, og
+from ok.gui.Communicate import communicate
+from src.gui_layout import (
+    move_group_navigation_before_capture,
+    move_group_task_info_below_cards,
+    select_group_after_stop_notification,
+    select_group_as_default_page,
+)
 from threading import Event
 
 logger = Logger.get_logger(__name__)
@@ -43,6 +50,29 @@ class Globals(QObject):
         logger.info("pynput stop")
         self.reset_pynput()
         self.shutdown_thread_pool_executor()
+
+    def on_show_main_window(self, main_window):
+        """Keep the full-auto task cards above their running log panel."""
+        self.main_window = main_window
+        navigation_moved = move_group_navigation_before_capture(main_window)
+        info_moved = move_group_task_info_below_cards(main_window)
+        default_selected = select_group_as_default_page(main_window)
+        logger.info(
+            "full-auto GUI layout applied: "
+            f"navigation_moved={navigation_moved}, info_moved={info_moved}, "
+            f"default_selected={default_selected}"
+        )
+        communicate.task_list_updated.connect(self._restore_full_auto_layout)
+        communicate.notification.connect(self._keep_full_auto_after_stop)
+
+    def _restore_full_auto_layout(self):
+        move_group_task_info_below_cards(self.main_window)
+
+    def _keep_full_auto_after_stop(
+        self, message, title=None, error=False, tray=False, show_tab=None, params=None
+    ):
+        if select_group_after_stop_notification(self.main_window, message):
+            logger.info("full-auto page selected after task stopped")
 
     def init_pynput(self):
         logger.info("pynput start")

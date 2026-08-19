@@ -1,11 +1,9 @@
-[English](README_en.md) | [简体中文](README.md)
-
 <div align="center">
   <img src="icons/icon.png" alt="icon" width="200"><br>
   <h1>ok-mabinogi-mobile</h1>
-  <p>一款基於圖像識別的《瑪奇 Mobile》自動化工具。</p>
-  <p>基于 <a href="https://github.com/ok-oldking/ok-script">ok-script</a> 框架开发。</p>
-  
+  <p>一款基於圖像辨識的《瑪奇 Mobile》自動化工具。</p>
+  <p>基於 <a href="https://github.com/ok-oldking/ok-script">ok-script</a> 框架開發。</p>
+
   <p>
     <img src="https://img.shields.io/badge/platform-Windows-blue" alt="平台">
     <img src="https://img.shields.io/badge/python-3.12-skyblue" alt="Python版本">
@@ -14,24 +12,16 @@
   </p>
 </div>
 
-## ⚠️ 免责声明
+## ⚠️ 免責聲明
 
-本軟件為開源、免費的外部工具，僅供學習和交流使用，透過模擬操作與《瑪奇 Mobile》的使用者介面互動。
+本軟體為開源、免費的外部工具，僅供學習和交流使用，透過模擬操作與《瑪奇 Mobile》的使用者介面互動。
 
--   **工作原理**：程序仅通过识别现有用户界面与游戏进行交互，不修改任何游戏文件或代码。
--   **使用目的**：旨在为用户提供便利，无意破坏游戏平衡或提供任何不公平优势。
--   **法律责任**：使用本软件产生的所有问题及后果，均与本项目及开发者团队无关。开发者团队拥有对本项目的最终解释权。
--   **商业行为**：若您遇到商家使用本软件进行代练并收费，此行为可能涉及设备与时间成本，与本软件本身无关。
+-   **運作原理**：程式僅透過辨識現有使用者介面與遊戲互動，不會修改任何遊戲檔案或程式碼。
+-   **使用目的**：旨在為使用者提供便利，無意破壞遊戲平衡或提供任何不公平優勢。
+-   **法律責任**：使用本軟體產生的一切問題及後果，均與本專案及開發團隊無關。開發團隊保留對本專案的最終解釋權。
+-   **商業行為**：若您遇到商家使用本軟體提供代練服務並收費，此行為可能涉及裝置與時間成本，與本軟體本身無關。
 
-> **使用第三方自動化工具可能違反遊戲服務條款，並可能導致帳號受限制或封禁。您應先了解並自行承擔所有風險。**
-
-<details>
-<summary><strong>Disclaimer in English</strong></summary>
-
-This software is an open-source, free external tool intended for learning and exchange purposes only. It interacts with *Mabinogi Mobile* solely through the existing user interface. It is not intended to disrupt game balance or provide an unfair advantage, and it does not modify game files or game code.
-
-All issues and consequences arising from the use of this software are not related to this project or its development team. The development team reserves the final right of interpretation for this project. If you encounter vendors using this software for services and charging a fee, this may cover their costs for equipment and time; any resulting problems or consequences are not associated with this software.
-</details>
+> **使用第三方自動化工具可能違反遊戲服務條款，並可能導致帳號受限制或封禁。使用前請先了解並自行承擔所有風險。**
 
 ## ✨ 主要功能
 
@@ -39,125 +29,91 @@ All issues and consequences arising from the use of this software are not relate
     *   管理及執行野外首領排程
 *   **採集排程**
     *   建立採集佇列並自動執行
-*   **背景操作**
-    *   透過畫面辨識及模擬輸入與遊戲互動
+*   **狩獵場事件**
+    *   按優先次序自動完成已選擇的狩獵場事件
 
-## 🖥️ 运行环境与兼容性
+## 🖥️ 執行環境與相容性
 
-*   **操作系统**：Windows
-*   **游戏分辨率**：1600x900 或更高（推荐 16:9 宽高比）
-*   **游戏语言**：简体中文 / English
+*   **作業系統**：Windows
+*   **遊戲解析度**：1600x900 或更高（建議使用 16:9 長寬比）
+*   **遊戲語言**：繁體中文
 
-## 🚀 安装指南
+## 🚀 安裝指南
 
-### 方式一：使用安装包 (推荐)
+### 方式一：使用安裝程式（建議）
 
-此方法适合绝大多数用户，简单快捷，并支持自动更新。
+此方法適合大多數使用者，簡單快捷，並支援自動更新。
 
 1.  前往 [**Releases**](https://github.com/MAKKACHUN/ok-mabinogi-mobile/releases) 頁面。
 2.  下載最新、名稱以 `setup.exe` 結尾的安裝程式。
-3.  双击运行安装程序，按提示完成安装即可。
+3.  按兩下執行安裝程式，依照提示完成安裝即可。
 
-### 方式二：从源码运行 (适合开发者)
+### 方式二：從原始碼執行（適合開發者）
 
-此方法需要您具备 Python 环境，适合希望进行二次开发或调试的用户。
+此方法需要具備 Python 環境，適合希望進行二次開發或偵錯的使用者。
 
-1.  **环境要求**：确保已安装 **Python 3.12** 或更高版本。
-2.  **克隆仓库**：
+1.  **環境要求**：確保已安裝 **Python 3.12** 或更高版本。
+2.  **複製儲存庫**：
     ```bash
     git clone https://github.com/MAKKACHUN/ok-mabinogi-mobile.git
     cd ok-mabinogi-mobile
     ```
-3.  **安装依赖**：
+3.  **安裝相依套件**：
     ```bash
     pip install -r requirements.txt --upgrade
     ```
-    *提示：每次更新代码后，建议重新运行此命令以确保依赖库为最新版本。*
-4.  **运行程序**：
+    *提示：每次更新程式碼後，建議重新執行此命令，確保相依套件為最新版本。*
+4.  **執行程式**：
     ```bash
-    # 运行正式版
+    # 執行正式版
     python main.py
-    
-    # 运行调试版 (会输出更详细的日志)
+
+    # 執行偵錯版（會輸出更詳細的紀錄）
     python main_debug.py
     ```
 
-## 📖 使用指南与 FAQ
+## 📖 使用指南與常見問題
 
-为确保程序稳定运行，请在使用前仔细阅读以下配置要求和常见问题解答。
+為確保程式穩定執行，請在使用前仔細閱讀以下設定要求和常見問題解答。
 
-### 一、 使用前配置 (必读)
+### 一、使用前設定（必讀）
 
-在启动自动化前，请务必检查并确认以下设置：
+啟動自動化前，請務必檢查並確認以下設定：
 
-*   **图形设置**
-    *   **显卡滤镜**：**关闭** 所有显卡滤行和锐化效果（如 NVIDIA Freestyle, AMD FidelityFX）。
-    *   **游戏亮度**：使用游戏 **默认亮度**。
-    *   **游戏UI缩放**：使用游戏 **默认缩放100%**。
-*   **分辨率**
-    *   推荐使用 **1600x900** 或以上的主流分辨率。
-*   **按键设置**
-    *   请务必使用游戏 **默认** 按键绑定。
-*   **第三方软件**
-    *   关闭任何在游戏画面上显示信息的悬浮窗，如 MSI Afterburner (小飞机) 的 **帧率显示**。
-*   **窗口与系统状态**
-    *   **鼠标干扰**：当游戏窗口处于 **前台** 时，请勿移动鼠标，否则会干扰程序的模拟点击。
-    *   **窗口状态**：游戏窗口可以置于后台，但 **不可最小化**。
-    *   **系统状态**：请勿让电脑 **熄屏** 或 **锁屏**，否则将导致程序中断。
+*   **圖形設定**
+    *   **顯示卡濾鏡**：**關閉**所有顯示卡濾鏡和銳化效果（例如 NVIDIA Freestyle、AMD FidelityFX）。
+    *   **遊戲亮度**：使用遊戲的**預設亮度**。
+    *   **遊戲 UI 縮放**：使用遊戲的**預設 100% 縮放**。
+*   **解析度**
+    *   建議使用 **1600x900** 或以上的常見 16:9 解析度。
+*   **按鍵設定**
+    *   請務必使用遊戲的**預設按鍵綁定**。
+*   **第三方軟體**
+    *   關閉任何在遊戲畫面上顯示資訊的懸浮視窗，例如 MSI Afterburner（小飛機）的**幀率顯示**。
+*   **視窗與系統狀態**
+    *   **滑鼠干擾**：遊戲視窗位於**前景**時，請勿移動滑鼠，否則會干擾程式的模擬點擊。
+    *   **視窗狀態**：遊戲視窗可以置於背景，但**不可最小化**。
+    *   **系統狀態**：請勿讓電腦**關閉螢幕**或**鎖定畫面**，否則程式將會中斷。
 
-### 二、 快速上手
+### 二、快速上手
 
-1.  进入您想要自动化的关卡或场景。
-2.  在程序界面上点击 **“开始”** 按钮即可。
+1.  進入您想要自動化的關卡或場景。
+2.  在程式介面的「全自動」頁面，選擇要執行的功能並點擊「開始」。
 
-### 三、 安装外部逻辑 (Mod)
+### 三、常見問題解答（FAQ）
 
-您可以安装社区开发的外部逻辑模块来扩展程序功能。
+**Q1：角色移動時經常撞牆，或者無法準確到達目標位置？**
 
-1.  在程序主页，点击 **“安装目录”** 按钮打开程序文件夹。
-2.  将下载的 Mod 文件放入 `mod` 文件夹内。
-3.  重启程序即可加载。
+*   **原因**：遊戲引擎的移動速度與幀率（FPS）密切相關。
+*   **解決方法**：
+    1.  **調整遊戲幀率**：在遊戲設定中，依次嘗試將幀率上限設為 **60 FPS**、**120 FPS**及**無限制**，找出表現最穩定的設定。
+    2.  **調整按鍵時長**：在對應任務的設定中微調**按鍵時長**參數。
+    3.  **等待官方最佳化**：此問題可能需要等待遊戲官方後續更新修正。
 
-### 四、 常见问题解答 (FAQ)
+### 四、問題回報
 
-**Q1: 角色移动时经常撞墙，或者无法准确走到目标点？**
+如果以上方法未能解決您的問題，歡迎透過 [**Issues**](https://github.com/MAKKACHUN/ok-mabinogi-mobile/issues) 回報。為協助我們快速定位問題，提交時請提供以下資訊：
 
-*   **原因**：游戏引擎的移动速度与帧率 (FPS) 强相关。
-*   **解决方案**：
-    1.  **调整游戏帧率**：在游戏设置中，依次尝试将帧率上限设为 **60 FPS** / **120 FPS** / **无限制**，找到表现最稳定的一档。
-    2.  **调整按键时长**：在对应任务或 Mod 的设置中，微调 **按键时长** 参数。
-    3.  **等待官方优化**：此问题可能需要等待游戏官方后续更新修复。
-
-**Q2: 我安装的 Mod 没有生效，或者识别不正确？**
-
-*   **原因**：Mod 内置的图像识别素材可能无法适配所有分辨率。
-*   **解决方案**：
-    1.  **切换分辨率**：尝试更换一个常见分辨率（如 1920x1080 或 1600x900）。
-    2.  **手动更新素材**：如果您了解 Mod 制作，可以为您当前的分辨率重新录制识图所需的截图。
-
-**Q3: 程序卡在结算或复位界面，不再继续执行？**
-
-*   **原因**：很可能是无意的鼠标移动干扰了程序的图像识别。
-*   **解决方案**：
-    1.  在程序左下角点击 **“设置”**。
-    2.  切换到 **“挂机设置”** 选项卡。
-    3.  勾选并启用 **“防止鼠标干扰”** 功能。
-
-### 五、 问题反馈
-
-如果以上方法未能解決您的問題，歡迎透過 [**Issues**](https://github.com/MAKKACHUN/ok-mabinogi-mobile/issues) 回報。為幫助我們快速定位問題，請在提交時提供以下資訊：
-
-*   **问题截图**：清晰展示异常界面或错误提示。
-*   **日志文件**：附上程序目录下的 `.log` 日志文件。
-*   **详细描述**：您进行了哪些操作？问题具体表现是什么？问题是稳定复现还是偶尔发生？
-
-## 🔗 使用[ok-script](https://github.com/ok-oldking/ok-script)开发的项目：
-
-* 鸣潮 [https://github.com/ok-oldking/ok-wuthering-wave](https://github.com/ok-oldking/ok-wuthering-waves)
-* 原神(停止维护,
-  但是后台过剧情可用) [https://github.com/ok-oldking/ok-genshin-impact](https://github.com/ok-oldking/ok-genshin-impact)
-* 少前2 [https://github.com/ok-oldking/ok-gf2](https://github.com/ok-oldking/ok-gf2)
-* 星铁 [https://github.com/Shasnow/ok-starrailassistant](https://github.com/Shasnow/ok-starrailassistant)
-* 星痕共鸣 [https://github.com/Sanheiii/ok-star-resonance](https://github.com/Sanheiii/ok-star-resonance)
-* 二重螺旋 [https://github.com/BnanZ0/ok-duet-night-abyss](https://github.com/BnanZ0/ok-duet-night-abyss)
-* 白荆回廊(停止更新) [https://github.com/ok-oldking/ok-baijing](https://github.com/ok-oldking/ok-baijing)
+*   **問題截圖**：清楚顯示異常畫面或錯誤提示。
+*   **紀錄檔案**：附上程式目錄內的 `.log` 紀錄檔案。
+*   **詳細描述**：您進行了哪些操作？問題的具體情況是甚麼？問題能否穩定重現，還是偶爾發生？
